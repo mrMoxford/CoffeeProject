@@ -1,9 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import Brazil01 from "../assets/CoffeeImgs/Brazil01.png";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
 import { tabletDevice, smallDevice, mediumDevice } from "../Responsive";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  incrementQuantity,
+  decrementQuantity,
+  removeItem,
+} from "../Redux/CartSlice";
 const Container = styled.div`
   min-height: 100vh;
   width: 100%;
@@ -134,6 +139,10 @@ const Button = styled.button`
   background: hsla(360, 65%, 20%, 1);
 `;
 const ShoppingCart = () => {
+  const cart = useSelector(state => {
+    state.cart;
+  });
+  const dispatch = useDispatch();
   return (
     <Container>
       <Title>review your items</Title>
@@ -144,36 +153,25 @@ const ShoppingCart = () => {
           </Topsection>
           <Bottomsection>
             <Info>
-              <CartItems>
-                <CartItemThumbnail src={Brazil01} alt="Brazilian Single origin Coffee"></CartItemThumbnail>
-                <CartItemName> Brazilian Single Origin Coffee</CartItemName>
-                <CartItemDetails>
-                  100g <i>whole beans</i>
-                </CartItemDetails>
-                <QuantityContainer>
-                  <ItemPrice> ¥2500 </ItemPrice>
-
-                  <HiMinus cursor="pointer" />
-                  <ItemQuatity>1</ItemQuatity>
-                  <HiPlus cursor="pointer" />
-                </QuantityContainer>
-                <TiDelete size={40} cursor="pointer" />
-              </CartItems>
-              <Hr />
-              <CartItems>
-                <CartItemThumbnail src={Brazil01} alt="Brazilian Single origin Coffee"></CartItemThumbnail>
-                <CartItemName> Brazilian Single Origin Coffee</CartItemName>
-                <CartItemDetails>
-                  100g <i>whole beans</i>
-                </CartItemDetails>
-                <QuantityContainer>
-                  <ItemPrice> ¥2500 </ItemPrice>
-                  <HiMinus cursor="pointer" />
-                  <ItemQuatity>1</ItemQuatity>
-                  <HiPlus cursor="pointer" />
-                </QuantityContainer>
-                <TiDelete size={40} cursor="pointer" />
-              </CartItems>
+              {cart.map(item => {
+                <CartItems>
+                  <CartItemThumbnail
+                    src={item.image}
+                    alt={item.name}
+                  ></CartItemThumbnail>
+                  <CartItemName>{item.name}</CartItemName>
+                  <CartItemDetails>
+                    100g <i>whole beans</i>
+                  </CartItemDetails>
+                  <QuantityContainer>
+                    <ItemPrice> {item.price} </ItemPrice>
+                    <HiMinus cursor="pointer" />
+                    <ItemQuatity>{item.quantity}</ItemQuatity>
+                    <HiPlus cursor="pointer" />
+                  </QuantityContainer>
+                  <TiDelete size={40} cursor="pointer" />
+                </CartItems>;
+              })}
               <Hr />
             </Info>
           </Bottomsection>

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { regions } from "../assets/data";
 import { tabletDevice, smallDevice } from "../Responsive";
+import { useLocation } from "react-router-dom";
 
 const africa = regions[0];
 const Container = styled.div`
@@ -48,6 +49,8 @@ const P = styled.p`
   display: flex;
 `;
 const ExploreRegion = () => {
+  const location = useLocation();
+  console.log(location);
   return (
     <Container>
       <Wrapper>

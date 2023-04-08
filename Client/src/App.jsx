@@ -3,19 +3,13 @@ import NavBar from "./components/NavBar";
 import Home from "./pages/Home.jsx";
 import Regions from "./components/Regions.jsx";
 import StorePage from "./pages/StorePage.jsx";
-import styled from "styled-components";
 import SingleProduct from "./pages/SingleProduct.jsx";
 import ExploreRegion from "./pages/ExploreRegion";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import ShoppingCart from "./pages/ShoppingCart";
 import Footer from "./components/Footer";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Outlet,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
@@ -26,6 +20,7 @@ const Layout = () => {
     </>
   );
 };
+
 const router = createBrowserRouter([
   {
     path: "/",

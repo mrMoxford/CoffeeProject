@@ -2,6 +2,7 @@ import React from "react";
 import { HiOutlinePlus } from "react-icons/hi";
 import { BsChatHeart } from "react-icons/bs";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 100%;
@@ -64,11 +65,12 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-const PriceContainer = styled.div`
+const PriceContainer = styled(Link)`
   flex: 1;
   width: 100%;
   display: flex;
-  //   color: hsla(4, 25%, 13%, 1);
+  text-decoration: none;
+  color: white;
   aspect-ratio: 1/0.2;
   justify-content: space-between;
   align-items: center;
@@ -99,7 +101,7 @@ const Product = ({ item }) => {
         <Image src={item.image} />
       </Circle>
 
-      <PriceContainer>
+      <PriceContainer to={`/store/${item._id}`}>
         <Price>{item.price}</Price>
         <Icon>
           <HiOutlinePlus color="hsla(104, 28%, 15%, 1)" size={30} />

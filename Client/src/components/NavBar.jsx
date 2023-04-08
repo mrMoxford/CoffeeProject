@@ -5,6 +5,8 @@ import { RiShoppingBasket2Line } from "react-icons/ri";
 import { smallDevice, tabletDevice } from "../Responsive";
 import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
+import Badge from "@mui/material/Badge";
+import { useSelector } from "react-redux";
 
 const Container = styled.nav`
   width: 100%;
@@ -112,15 +114,13 @@ const NavListSmall = styled.ul`
 
 const NavBar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
-
+  const quantity = useSelector(state => state.cart.cartQuantity);
   return (
     <Container>
       <Wrapper>
         <LeftCol>
           {" "}
-          <Logo>
-            <Nav to="/">ODESSY_JAVA</Nav>
-          </Logo>
+          <Logo to="/">ODESSY_JAVA</Logo>
         </LeftCol>
         <CenterCol>
           <NavList>
@@ -130,7 +130,9 @@ const NavBar = () => {
           </NavList>
         </CenterCol>
         <RightCol>
-          <RiShoppingBasket2Line color="white" size={20} />
+          <Badge badgeContent={quantity} color="primary">
+            <RiShoppingBasket2Line color="white" size={40} />
+          </Badge>
           <Nav to="/login">Login</Nav>
           <Nav to="/signup">Signup</Nav>
         </RightCol>
@@ -150,7 +152,10 @@ const NavBar = () => {
             <Nav to="/">Home</Nav>
             <Nav to="/regions">Explore</Nav>
             <Nav to="/store">Store</Nav>
-            <RiShoppingBasket2Line color="white" size={40} />
+            <Badge badgeContent={quantity} color="primary">
+              <RiShoppingBasket2Line color="white" size={40} />
+            </Badge>
+
             <Nav to="/login">Login</Nav>
             <Nav to="/signup">Signup</Nav>
           </NavListSmall>

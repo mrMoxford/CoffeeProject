@@ -1,20 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Ethiopia01 from "../assets/CoffeeImgs/Ethiopia01.png";
-import { HiMinus, HiPlus } from "react-icons/hi";
+import { publicRequest } from "../reqMethods";
 import { tabletDevice, smallDevice } from "../Responsive";
-const Product = {
-  id: 1,
-  Brand: "Barbarossa",
-  country: "Ethiopia",
-  region: "Africa",
-  image: Ethiopia01,
-  name: "Sidamo Coffee",
-  size: "100g",
-  roastLevel: "Light Roast",
-  flavourProfile: " Sweet Fruity",
-  price: "¥2500",
-};
+import { useLocation } from "react-router-dom";
+import { addToCart } from "../Redux/CartSlice";
+
 const Container = styled.div`
   padding: 2rem 4rem;
   height: 100%;
@@ -82,7 +72,6 @@ const QuantityContainer = styled.div`
 
   ${smallDevice({ marginBottom: "1rem;" })};
 `;
-const Quatity = styled.p``;
 
 const Price = styled.p`
   flex: 1;
@@ -106,38 +95,54 @@ const Button = styled.button`
   ${smallDevice({ width: "100%;" })};
 `;
 const SingleProduct = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  console.log(id);
+
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/products/find/" + id);
+        setProduct(res.data);
+      } catch (err) {}
+    };
+    getProduct();
+  }, [id]);
+
+  const handleClick = () => {
+    dispatch(addToCart({ ...product }));
+  };
   return (
     <Container>
       <Wrapper>
         <ProductInfo>
-          <Name>{Product.name}</Name>
+          <Name>{product.name}</Name>
           <Brand>
-            <b>Brand:</b> {Product.Brand}
+            <b>Brand:</b> {product.Brand}
           </Brand>
           <Region>
-            <b> Region:</b> {Product.region}
+            <b> Region:</b> {product.region}
           </Region>
           <Country>
-            <b>Origin:</b> {Product.country}
+            <b>Origin:</b> {product.country}
           </Country>
           <RoastLevel>
-            <b>Roast Level:</b> {Product.roastLevel}
+            <b>Roast Level:</b> {product.roastLevel}
           </RoastLevel>
           <FlavourProfile>
-            <b>Flavour Profile:</b> {Product.flavourProfile}
+            <b>Flavour Profile:</b> {product.flavourProfile}
           </FlavourProfile>
           <Selects>
             <QuantityContainer>
-              <HiMinus />
-              <Quatity>1</Quatity>
-              <HiPlus />
-              <Price>{Product.price} </Price>
+              <Price>¥{product.price} </Price>
             </QuantityContainer>
-            <Button>Add to Basket</Button>
+            <Button onClick={handleClick}>Add to Basket</Button>
           </Selects>
         </ProductInfo>
         <ImageContainer>
-          <Image src={Product.image} />
+          <Image src={product.image} />
         </ImageContainer>
       </Wrapper>
     </Container>
