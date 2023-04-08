@@ -4,48 +4,51 @@ import { publicRequest } from "../reqMethods";
 import { tabletDevice, smallDevice } from "../Responsive";
 import { useLocation } from "react-router-dom";
 import { addToCart } from "../Redux/CartSlice";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
-  padding: 2rem 4rem;
-  height: 100%;
+  padding: 2rem 6rem;
+  height: 100vh;
   width: 100%;
   display: flex;
   font-weight: 200;
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: black;
-  background: white;
+  background: hsla(0, 0%, 85%, 0.5);
   ${smallDevice({ padding: "1rem" })};
 `;
 const Wrapper = styled.div`
   flex: 1;
+  margin-top: 1.5rem;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: space-between;
   border-radius: 1rem;
+
   ${tabletDevice({ flexDirection: "column-reverse" })};
 `;
 const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   flex: 1;
-  background-color: hsla(104, 28%, 15%, 1);
+
   ${tabletDevice({ marginBottom: "2rem" })};
 `;
 const ProductInfo = styled.ul`
   display: flex;
   flex: 1;
-  background: hsla(0, 0%, 100%, 1);
   margin: 0;
   padding-right: 2rem;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   list-style: none;
   ${tabletDevice({ padding: "0" })};
 `;
 const Selects = styled.div`
   display: flex;
+
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -63,29 +66,20 @@ const RoastLevel = styled.li``;
 const FlavourProfile = styled.li`
   margin-bottom: 2rem;
 `;
-const QuantityContainer = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-
-  ${smallDevice({ marginBottom: "1rem;" })};
-`;
 
 const Price = styled.p`
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  font-size: 2rem;
 `;
 const Button = styled.button`
-  background: white;
   padding: 1rem;
   font-weight: 500;
   font-size: 1rem;
   outline: none;
-  border: 1px solid hsla(4, 25%, 13%, 0.2);
+  border: 2px solid hsla(4, 25%, 13%, 0.2);
   color: hsla(104, 28%, 15%, 1);
   cursor: pointer;
   &:hover {
@@ -97,10 +91,8 @@ const Button = styled.button`
 const SingleProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  console.log(id);
-
   const [product, setProduct] = useState([]);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -111,7 +103,7 @@ const SingleProduct = () => {
     getProduct();
   }, [id]);
 
-  const handleClick = () => {
+  const handleClick = product => {
     dispatch(addToCart({ ...product }));
   };
   return (
@@ -120,7 +112,7 @@ const SingleProduct = () => {
         <ProductInfo>
           <Name>{product.name}</Name>
           <Brand>
-            <b>Brand:</b> {product.Brand}
+            <b>Brand:</b> {product.brand}
           </Brand>
           <Region>
             <b> Region:</b> {product.region}
@@ -135,10 +127,8 @@ const SingleProduct = () => {
             <b>Flavour Profile:</b> {product.flavourProfile}
           </FlavourProfile>
           <Selects>
-            <QuantityContainer>
-              <Price>¥{product.price} </Price>
-            </QuantityContainer>
-            <Button onClick={handleClick}>Add to Basket</Button>
+            <Price>¥{product.price} </Price>
+            <Button onClick={() => handleClick(product)}>Add to Basket</Button>
           </Selects>
         </ProductInfo>
         <ImageContainer>

@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 const Container = styled.nav`
   width: 100%;
-  padding: 0 4rem;
+  padding: 0.5rem 4rem;
   position: fixed;
   z-index: 99;
   background: rgba(0, 0, 0, 0.7);
@@ -130,8 +130,10 @@ const NavBar = () => {
           </NavList>
         </CenterCol>
         <RightCol>
-          <Badge badgeContent={quantity} color="primary">
-            <RiShoppingBasket2Line color="white" size={40} />
+          <Badge badgeContent={1} color="primary">
+            <Nav to="/cart">
+              <RiShoppingBasket2Line color="white" size={"2rem"} />
+            </Nav>
           </Badge>
           <Nav to="/login">Login</Nav>
           <Nav to="/signup">Signup</Nav>
@@ -153,7 +155,9 @@ const NavBar = () => {
             <Nav to="/regions">Explore</Nav>
             <Nav to="/store">Store</Nav>
             <Badge badgeContent={quantity} color="primary">
-              <RiShoppingBasket2Line color="white" size={40} />
+              <Nav to="/cart">
+                <RiShoppingBasket2Line color="white" size={"2rem"} />
+              </Nav>
             </Badge>
 
             <Nav to="/login">Login</Nav>

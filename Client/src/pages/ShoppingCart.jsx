@@ -4,10 +4,13 @@ import { HiMinus, HiPlus } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
 import { tabletDevice, smallDevice, mediumDevice } from "../Responsive";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import {
   incrementQuantity,
   decrementQuantity,
   removeItem,
+  clearCart,
+  getTotals,
 } from "../Redux/CartSlice";
 const Container = styled.div`
   min-height: 100vh;
@@ -53,10 +56,11 @@ const Topsection = styled.div`
   margin-bottom: 4rem;
 `;
 
-const TopButton = styled.button`
+const TopButton = styled(Link)`
   padding: 1rem;
   cursor: pointer;
   background: transparent;
+  text-decoration: none;
   border: none;
   color: black;
 `;
@@ -103,6 +107,20 @@ const Hr = styled.hr`
   border: none;
   height: 1px;
 `;
+const ClearButton = styled.button`
+  font-size: 1.5rem;
+  color: black;
+  padding: 1rem;
+  margin-block: 2rem;
+  background: lightgray;
+  outline: transparent;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+`;
 const Summary = styled.div`
   flex: 1;
   height: 50vh;
@@ -139,22 +157,35 @@ const Button = styled.button`
   background: hsla(360, 65%, 20%, 1);
 `;
 const ShoppingCart = () => {
-  const cart = useSelector(state => {
-    state.cart;
-  });
+  const cart = useSelector(state => state.cart);
+  const param = useParams();
+  console.log(param);
   const dispatch = useDispatch();
+  const handleIncrement = item => {
+    dispatch(incrementQuantity(item));
+  };
+  const handleDecrement = item => {
+    dispatch(decrementQuantity(item));
+  };
+  const handleRemove = item => {
+    dispatch(removeItem(item));
+  };
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
   return (
     <Container>
       <Title>review your items</Title>
       <Wrapper>
         <Sections>
           <Topsection>
-            <TopButton> ← Continue Shopping </TopButton>
+            <TopButton to="/store"> ← Back to Store </TopButton>
           </Topsection>
+
           <Bottomsection>
             <Info>
-              {cart.map(item => {
-                <CartItems>
+              {cart.products.map(item => (
+                <CartItems key={item._id}>
                   <CartItemThumbnail
                     src={item.image}
                     alt={item.name}
@@ -165,16 +196,27 @@ const ShoppingCart = () => {
                   </CartItemDetails>
                   <QuantityContainer>
                     <ItemPrice> {item.price} </ItemPrice>
-                    <HiMinus cursor="pointer" />
+                    <HiMinus
+                      onClick={() => handleDecrement(item)}
+                      cursor="pointer"
+                    />
                     <ItemQuatity>{item.quantity}</ItemQuatity>
-                    <HiPlus cursor="pointer" />
+                    <HiPlus
+                      onClick={() => handleIncrement(item)}
+                      cursor="pointer"
+                    />
                   </QuantityContainer>
-                  <TiDelete size={40} cursor="pointer" />
-                </CartItems>;
-              })}
-              <Hr />
+                  <TiDelete
+                    onClick={() => handleRemove(item)}
+                    size={40}
+                    cursor="pointer"
+                  />
+                </CartItems>
+              ))}
             </Info>
+            <Hr />
           </Bottomsection>
+          <ClearButton onClick={handleClearCart}>Clear Cart</ClearButton>
         </Sections>
         <Summary>
           <SummurayTitle>Order Summary</SummurayTitle>
