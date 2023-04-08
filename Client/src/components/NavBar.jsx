@@ -3,6 +3,7 @@ import { CgCloseO } from "react-icons/cg";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { RiShoppingBasket2Line } from "react-icons/ri";
 import { smallDevice, tabletDevice } from "../Responsive";
+import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
 
 const Container = styled.nav`
@@ -10,7 +11,7 @@ const Container = styled.nav`
   padding: 0 4rem;
   position: fixed;
   z-index: 99;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.7);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6.9px);
   -webkit-backdrop-filter: blur(6.9px);
@@ -28,11 +29,13 @@ const LeftCol = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
-const Logo = styled.p`
+const Logo = styled(Link)`
   font-size: 2rem;
   font-weight: 200;
   position: absolue;
   text-transform: uppercase;
+  text-decoration: none;
+  color: white;
   ${smallDevice({ fontSize: "1.5rem" })}
 `;
 const CenterCol = styled.div`
@@ -45,7 +48,8 @@ const CenterCol = styled.div`
 
 const NavList = styled.ul`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 2rem;
   width: 100%;
   padding: 0;
   font-size: 1rem;
@@ -53,7 +57,7 @@ const NavList = styled.ul`
   list-style: none;
 `;
 
-const NavLink = styled.a`
+const Nav = styled(NavLink)`
   text-decoration: none;
   color: white;
 `;
@@ -105,10 +109,7 @@ const NavListSmall = styled.ul`
   gap: 2rem;
   font-size: 2rem;
 `;
-const NavLinkSmall = styled.a`
-  color: white;
-  text-decoration: none;
-`;
+
 const NavBar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
 
@@ -118,19 +119,20 @@ const NavBar = () => {
         <LeftCol>
           {" "}
           <Logo>
-            <NavLink>odessey</NavLink>
+            <Nav to="/">ODESSY_JAVA</Nav>
           </Logo>
         </LeftCol>
         <CenterCol>
           <NavList>
-            <NavLink href="/">Home</NavLink>
-            <NavLink href="#Explore">Explore</NavLink>
-            <NavLink href="#MyJourney">My Journey</NavLink>
-            <NavLink href="#Store">Store</NavLink>
+            <Nav to="/">Home</Nav>
+            <Nav to="/regions">Explore</Nav>
+            <Nav to="/Store">Store</Nav>
           </NavList>
         </CenterCol>
         <RightCol>
           <RiShoppingBasket2Line color="white" size={20} />
+          <Nav to="/login">Login</Nav>
+          <Nav to="/signup">Signup</Nav>
         </RightCol>
       </Wrapper>
       <NavOpen onClick={() => setMenuToggle(true)}>
@@ -142,14 +144,15 @@ const NavBar = () => {
             <CgCloseO color="white" size={30} />
           </NavClose>
           <NavLogoContainer>
-            <Logo href="/">Odessey</Logo>
+            <Logo to="/">ODESSY_JAVA</Logo>
           </NavLogoContainer>
           <NavListSmall>
-            <NavLinkSmall href="/">Home</NavLinkSmall>
-            <NavLinkSmall href="#Explore">Explore</NavLinkSmall>
-            <NavLinkSmall href="#MyJourney">My Journey</NavLinkSmall>
-            <NavLinkSmall href="#Store">Store</NavLinkSmall>
+            <Nav to="/">Home</Nav>
+            <Nav to="/regions">Explore</Nav>
+            <Nav to="/store">Store</Nav>
             <RiShoppingBasket2Line color="white" size={40} />
+            <Nav to="/login">Login</Nav>
+            <Nav to="/signup">Signup</Nav>
           </NavListSmall>
         </NavMenuSmall>
       )}

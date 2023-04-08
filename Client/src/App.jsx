@@ -10,23 +10,66 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import ShoppingCart from "./pages/ShoppingCart";
 import Footer from "./components/Footer";
-// const Container = styled.div`
-//   height: 100%;
-//   width: 100%;
-// `;
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Outlet,
+} from "react-router-dom";
+
+const Layout = () => {
+  return (
+    <>
+      <NavBar />
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/regions",
+        element: <Regions />,
+      },
+      {
+        path: "/regions/:region",
+        element: <ExploreRegion />,
+      },
+      {
+        path: "/store",
+        element: <StorePage />,
+      },
+      {
+        path: "/store/:id",
+        element: <SingleProduct />,
+      },
+    ],
+  },
+  {
+    path: "/cart",
+    element: <ShoppingCart />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+]);
 function App() {
   return (
     <div>
-      {/* <NavBar />
-      <Home />
-      <SignUp />
-      <Login />
-      <Regions />
-      <ExploreRegion />
-      <StorePage />
-      <SingleProduct /> */}
-      <ShoppingCart />
-      <Footer />
+      <RouterProvider router={router} />
     </div>
   );
 }

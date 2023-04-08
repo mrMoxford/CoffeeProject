@@ -2,6 +2,7 @@ import styled from "styled-components";
 import RegionItem from "./RegionItem";
 import { regions } from "../assets/data";
 import { tabletDevice, smallDevice } from "../Responsive";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -25,13 +26,14 @@ const Title = styled.h2`
   margin-bottom: 4rem;
   color: hsla(104, 28%, 15%, 1);
 `;
+
 const Regions = () => {
   return (
     <Container id="Explore">
       <Title>Pick a region on the map to start your journey.</Title>
       <Wrapper>
         {regions.map(region => (
-          <RegionItem key={region.id} id={region.id} item={region} />
+          <RegionItem id={region.id} item={region} />
         ))}
       </Wrapper>
     </Container>
