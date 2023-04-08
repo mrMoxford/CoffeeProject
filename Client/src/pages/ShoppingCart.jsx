@@ -195,7 +195,7 @@ const ShoppingCart = () => {
                     100g <i>whole beans</i>
                   </CartItemDetails>
                   <QuantityContainer>
-                    <ItemPrice> {item.price} </ItemPrice>
+                    <ItemPrice> {item.price * item.quantity} </ItemPrice>
                     <HiMinus
                       onClick={() => handleDecrement(item)}
                       cursor="pointer"

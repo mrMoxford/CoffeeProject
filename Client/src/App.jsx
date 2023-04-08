@@ -9,6 +9,8 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import ShoppingCart from "./pages/ShoppingCart";
 import Footer from "./components/Footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 const Layout = () => {
@@ -64,6 +66,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div>
+      <ToastContainer />
       <RouterProvider router={router} />
     </div>
   );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Products from "../components/Products";
 import { tabletDevice, smallDevice } from "../Responsive";
-import React from "react";
+import React, { useState } from "react";
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -23,15 +23,27 @@ const Cat = styled.p`
   color: black;
 `;
 const StorePage = () => {
+  const [region, setRegion] = useState(null);
+  const handleClick = e => {
+    setRegion(e.target.getAttribute("value"));
+  };
   return (
     <Container>
       <CatContainer>
-        <Cat>All</Cat>
-        <Cat>Africa</Cat>
-        <Cat>Asia</Cat>
-        <Cat>South America</Cat>
+        <Cat name="all" onClick={handleClick}>
+          All
+        </Cat>
+        <Cat name="Africa" value="Africa" onClick={handleClick}>
+          Africa
+        </Cat>
+        <Cat name="Asia" value="Asia" onClick={handleClick}>
+          Asia
+        </Cat>
+        <Cat name="South America" value="South America" onClick={handleClick}>
+          South America
+        </Cat>
       </CatContainer>
-      <Products />
+      <Products region={region} />
     </Container>
   );
 };

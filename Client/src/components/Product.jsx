@@ -65,11 +65,10 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-const PriceContainer = styled(Link)`
+const PriceContainer = styled.div`
   flex: 1;
   width: 100%;
   display: flex;
-  text-decoration: none;
   color: white;
   aspect-ratio: 1/0.2;
   justify-content: space-between;
@@ -101,7 +100,7 @@ const Product = ({ item }) => {
         <Image src={item.image} />
       </Circle>
 
-      <PriceContainer to={`/store/${item._id}`}>
+      <PriceContainer>
         <Price>{item.price}</Price>
         <Icon>
           <HiOutlinePlus color="hsla(104, 28%, 15%, 1)" size={30} />

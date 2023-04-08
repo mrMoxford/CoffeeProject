@@ -4,9 +4,10 @@ import { regions } from "../assets/data";
 import { tabletDevice, smallDevice } from "../Responsive";
 import { useLocation } from "react-router-dom";
 
-const africa = regions[0];
 const Container = styled.div`
-  padding: 2rem 4rem;
+  padding: 5rem 4rem;
+  width: 100%;
+  height: 100vh;
   color: black;
   display: flex;
   align-items: center;
@@ -50,16 +51,20 @@ const P = styled.p`
 `;
 const ExploreRegion = () => {
   const location = useLocation();
-  console.log(location);
+  const name = location.pathname.split("/")[2];
+  const region = regions.filter(r => r.title === name);
+
   return (
     <Container>
-      <Wrapper>
-        <Image>{africa.image}</Image>
-        <Info>
-          <Title>{africa.title}</Title>
-          <P>{africa.info}</P>
-        </Info>
-      </Wrapper>
+      {region.map(r => (
+        <Wrapper key={r.title}>
+          <Image>{r.image}</Image>
+          <Info>
+            <Title>{r.title}</Title>
+            <P>{r.info}</P>
+          </Info>
+        </Wrapper>
+      ))}
     </Container>
   );
 };

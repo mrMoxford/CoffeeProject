@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { publicRequest } from "../reqMethods";
+import { Link } from "react-router-dom";
 import Product from "./Product";
 import axios from "axios";
 // import { products } from "../assets/data";
@@ -14,7 +14,10 @@ const Container = styled.div`
   place-items: center;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 `;
-
+const Cart = styled(Link)`
+  text-decoration: none;
+  color: white;
+`;
 const Products = ({ region }) => {
   const [products, setProducts] = useState([]);
 
@@ -34,7 +37,9 @@ const Products = ({ region }) => {
   return (
     <Container>
       {products.map(item => (
-        <Product item={item} key={item._id} />
+        <Cart to={`/store/${item._id}`} key={item._id}>
+          <Product item={item} />
+        </Cart>
       ))}
     </Container>
   );
