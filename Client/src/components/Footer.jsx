@@ -10,11 +10,8 @@ import {
 import { tabletDevice, smallDevice } from "../Responsive";
 const Container = styled.div`
   padding: 2rem 4rem;
-  width: 100%;
-  min-height: 30vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: space-between;
   color: white;
   background: hsla(104, 28%, 15%, 1);
   ${smallDevice({ padding: "1rem" })};
@@ -23,10 +20,9 @@ const Container = styled.div`
 const Left = styled.div`
   flex-direction: column;
   display: flex;
-  height: 100%;
   flex: 1;
   justify-content: space-between;
-  align-items: start;
+  align-items: flex-start;
 `;
 const Logo = styled.h1`
   text-transform: uppercase;
@@ -37,11 +33,12 @@ const Logo = styled.h1`
 const SocialMedia = styled.div`
   display: flex;
   justify-content: flex-start;
+  gap: 1rem;
   align-items: center;
 `;
 const SocialLink = styled.a`
   text-decoration: none;
-  color: unset;
+  color: white;
 `;
 
 const Footer = () => {

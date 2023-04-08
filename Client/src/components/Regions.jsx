@@ -9,8 +9,8 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-start;
   background: hsla(0, 0%, 85%, 0.5);
   ${smallDevice({ padding: "1rem" })}
 `;
@@ -25,8 +25,9 @@ const Wrapper = styled.div`
 `;
 const Title = styled.h2`
   flex: 1;
+  width: 50%;
   font-size: clamp(1rem, 6vw, 3rem);
-  color: hsla(104, 28%, 15%, 1);
+  color: black;
   ${smallDevice({ marginTop: "4rem" })}
 `;
 

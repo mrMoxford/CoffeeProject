@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import SignUpBg from "../assets/CoffeeImgs/SignUpBg.png";
 import { tabletDevice, smallDevice } from "../Responsive";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   padding: 2rem 4rem;
@@ -61,7 +62,11 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
 `;
-
+const ALink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  font-size: 0.8rem;
+`;
 const SignUp = () => {
   return (
     <Container>
@@ -70,16 +75,18 @@ const SignUp = () => {
         <Title> Create Your Account</Title>
         <Form>
           <Input placeholder="name" />
-          <Input placeholder="lastname" />
           <Input placeholder="username" />
           <Input placeholder="email" />
           <Input placeholder="password" />
           <Input placeholder="confirm password" />
           <Agreement>
-            We collect and use your personal information solely to fulfill your orders and provide you with our services, and we do not share your information with any third parties, as your privacy
-            is important to us.
+            We collect and use your personal information solely to fulfill your
+            orders and provide you with our services, and we do not share your
+            information with any third parties, as your privacy is important to
+            us.
           </Agreement>
           <Button>Sign Up</Button>
+          <ALink to="/login"> Already have an account?</ALink>
         </Form>
       </Wrapper>
     </Container>

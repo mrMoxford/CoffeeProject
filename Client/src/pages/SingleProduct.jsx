@@ -4,7 +4,7 @@ import { publicRequest } from "../reqMethods";
 import { tabletDevice, smallDevice } from "../Responsive";
 import { useLocation } from "react-router-dom";
 import { addToCart, getTotals } from "../Redux/CartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   padding: 2rem 6rem;
@@ -19,12 +19,11 @@ const Container = styled.div`
 `;
 const Wrapper = styled.div`
   flex: 1;
-  margin-top: 1.5rem;
+  margin-top: 5rem;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border-radius: 1rem;
 
   ${tabletDevice({ flexDirection: "column-reverse" })};
 `;
@@ -93,6 +92,11 @@ const SingleProduct = () => {
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState([]);
   const dispatch = useDispatch();
+  const cart = useSelector(state => state.cart);
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
+
   useEffect(() => {
     const getProduct = async () => {
       try {

@@ -22,7 +22,8 @@ const Container = styled.div`
   align-items: flex-start;
   color: black;
   font-size: 1.2rem;
-  background: hsla(104, 28%, 15%, 0.1);
+  background: hsla(0, 0%, 85%, 0.5);
+
   ${smallDevice({ padding: "1rem" })};
 `;
 const Title = styled.h1`
@@ -109,17 +110,13 @@ const Hr = styled.hr`
 `;
 const ClearButton = styled.button`
   font-size: 1.5rem;
-  color: black;
   padding: 1rem;
   margin-block: 2rem;
-  background: lightgray;
+  border: 2px solid hsla(0, 0%, 0%, 0.21);
+  background-color: black;
+  color: white;
   outline: transparent;
-  border: none;
   cursor: pointer;
-  &:hover {
-    background-color: black;
-    color: white;
-  }
 `;
 const Summary = styled.div`
   flex: 1;
@@ -152,9 +149,12 @@ const Button = styled.button`
   padding: 1rem;
   outline: transparent;
   cursor: pointer;
-  border: none;
-  color: white;
-  background: hsla(360, 65%, 20%, 1);
+  border: 2px solid hsla(0, 0%, 0%, 0.21);
+  background: transparent;
+  &:hover {
+    background-color: hsla(360, 65%, 20%, 1);
+    color: white;
+  }
 `;
 const ShoppingCart = () => {
   const cart = useSelector(state => state.cart);
@@ -176,6 +176,9 @@ const ShoppingCart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+  const cartShipping = cart.cartQuantity === 0 ? 0 : cart.shipping;
+  const cartDiscount = cart.cartTotal < 10000 ? 0 : cart.discount;
+
   return (
     <Container>
       <Title>review your items</Title>
@@ -224,20 +227,22 @@ const ShoppingCart = () => {
         <Summary>
           <SummurayTitle>Order Summary</SummurayTitle>
           <SummurayItem>
-            <SummurayText>Subtotal {cart.cartQuantity}</SummurayText>
+            <SummurayText>Subtotal ({cart.cartQuantity})</SummurayText>
             <SummurayPrice>{cart.cartTotal}</SummurayPrice>
           </SummurayItem>
           <SummurayItem>
             <SummurayText>Shipping</SummurayText>
-            <SummurayPrice>TBD</SummurayPrice>
+            <SummurayPrice>{cartShipping}</SummurayPrice>
           </SummurayItem>
           <SummurayItem>
             <SummurayText>Discount</SummurayText>
-            <SummurayPrice>TBD</SummurayPrice>
+            <SummurayPrice>{cartDiscount}</SummurayPrice>
           </SummurayItem>
           <SummurayItem type="total">
             <SummurayText>Estimated Total</SummurayText>
-            <SummurayPrice>{cart.cartTotal}</SummurayPrice>
+            <SummurayPrice>
+              {cart.cartTotal + cartShipping - cartDiscount}
+            </SummurayPrice>
           </SummurayItem>
           <Button>Checkout Now</Button>
         </Summary>

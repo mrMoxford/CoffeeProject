@@ -23,7 +23,7 @@ const Image = styled.div`
     height: 100%;
     width: 100%;
     &:hover path {
-      fill: black;
+      fill: hsla(104, 28%, 15%, 1);
     }
   }
 `;
@@ -35,7 +35,7 @@ const Info = styled.div`
   flex-direction: column;
 `;
 const Title = styled.p`
-  color: hsla(360, 65%, 20%, 1);
+  color: black;
   font-weight: bold;
   font-size: 2rem;
 `;

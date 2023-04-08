@@ -5,9 +5,7 @@ import { IoMdSend } from "react-icons/io";
 const Container = styled.div`
   flex: 1;
   display: flex;
-  height: 100%;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: space-between;
 `;
 const Title = styled.h2`
@@ -22,7 +20,6 @@ const InputContainer = styled.div`
   display: flex;
   background: white;
   width: 100%;
-  margin-bottom: 1rem;
 `;
 const Input = styled.input`
   flex: 8;
@@ -43,7 +40,10 @@ const NewsLetter = () => {
   return (
     <Container>
       <Title>The Chronicles</Title>
-      <Contents>Follow the Journey and Subscribe to the newsLetter to recieve updates on your favourite items.</Contents>
+      <Contents>
+        Follow the Journey and Subscribe to the newsLetter to recieve updates on
+        your favourite items.
+      </Contents>
       <InputContainer>
         <Input placeholder="Your Email"></Input>
         <Button>

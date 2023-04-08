@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LoginBg from "../assets/CoffeeImgs/LoginBg.png";
 import { tabletDevice, smallDevice } from "../Responsive";
+import { Link } from "react-router-dom";
 const Container = styled.div`
   padding: 2rem 4rem;
   display: flex;
@@ -57,10 +58,10 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
 `;
-const Link = styled.a`
-  text-decoration: underline;
+const ALink = styled(Link)`
+  text-decoration: none;
+  color: black;
   font-size: 0.8rem;
-  cursor: pointer;
 `;
 const Login = () => {
   return (
@@ -73,8 +74,8 @@ const Login = () => {
           <Input placeholder="password" />
 
           <Button>Log In</Button>
-          <Link>Forgot your password?</Link>
-          <Link>Don't have an account? </Link>
+          <ALink>Forgot your password?</ALink>
+          <ALink to="/signup">Don't have an account? </ALink>
         </Form>
       </Wrapper>
       <Imagesection></Imagesection>

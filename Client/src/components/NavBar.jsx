@@ -4,10 +4,9 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { RiShoppingBasket2Line } from "react-icons/ri";
 import { smallDevice, tabletDevice } from "../Responsive";
 import { Link, NavLink } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Badge from "@mui/material/Badge";
-import { useSelector, useDispatch } from "react-redux";
-import { getTotals } from "../Redux/CartSlice";
+import { useSelector } from "react-redux";
 
 const Container = styled.nav`
   width: 100%;
@@ -78,6 +77,7 @@ const RightCol = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  text-transform: uppercase;
   ${tabletDevice({ display: "none" })}
 `;
 
@@ -124,11 +124,7 @@ const NavListSmall = styled.ul`
 const NavBar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
   const quantity = useSelector(state => state.cart?.cartQuantity);
-  console.log(quantity);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getTotals()), [quantity];
-  });
+
   return (
     <Container>
       <Wrapper>
