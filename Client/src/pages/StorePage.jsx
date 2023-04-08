@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Products from "../components/Products";
-import { tabletDevice, smallDevice } from "../Responsive";
+import { smallDevice } from "../Responsive";
 import React, { useState } from "react";
 const Container = styled.div`
   width: 100%;
@@ -10,17 +10,22 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: hsla(0, 0%, 85%, 0.5);
 `;
 const CatContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
   width: 100%;
   margin-block: 2rem;
+  ${smallDevice({ alignItems: "flex-start", flexDirection: "column" })}
 `;
 const Cat = styled.p`
   font-size: 2rem;
-  color: black;
+  cursor: pointer;
+  color: ${props => (props.active === true ? "red" : "black")};
 `;
 const StorePage = () => {
   const [region, setRegion] = useState(null);
@@ -30,16 +35,28 @@ const StorePage = () => {
   return (
     <Container>
       <CatContainer>
-        <Cat name="all" onClick={handleClick}>
+        <Cat active={region === null ? true : false} onClick={handleClick}>
           All
         </Cat>
-        <Cat name="Africa" value="Africa" onClick={handleClick}>
+        <Cat
+          active={region === "Africa" ? true : false}
+          value="Africa"
+          onClick={handleClick}
+        >
           Africa
         </Cat>
-        <Cat name="Asia" value="Asia" onClick={handleClick}>
+        <Cat
+          active={region === "Asia" ? true : false}
+          value="Asia"
+          onClick={handleClick}
+        >
           Asia
         </Cat>
-        <Cat name="South America" value="South America" onClick={handleClick}>
+        <Cat
+          active={region === "South America" ? true : false}
+          value="South America"
+          onClick={handleClick}
+        >
           South America
         </Cat>
       </CatContainer>

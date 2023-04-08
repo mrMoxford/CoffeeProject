@@ -23,7 +23,7 @@ const Image = styled.div`
     height: 100%;
     width: 100%;
     &:hover path {
-      fill: hsla(104, 28%, 15%, 1);
+      fill: black;
     }
   }
 `;

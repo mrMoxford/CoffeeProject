@@ -30,7 +30,9 @@ const Products = ({ region }) => {
             : "http://localhost:5000/api/products"
         );
         setProducts(res.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     getProducts();
   }, [region]);

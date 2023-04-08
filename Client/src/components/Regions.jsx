@@ -4,26 +4,30 @@ import { regions } from "../assets/data";
 import { tabletDevice, smallDevice } from "../Responsive";
 
 const Container = styled.div`
+  padding: 4rem;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   width: 100%;
+  min-height: 100vh;
+  justify-content: center;
   align-items: center;
-  padding: 4rem;
+  background: hsla(0, 0%, 85%, 0.5);
   ${smallDevice({ padding: "1rem" })}
 `;
 const Wrapper = styled.div`
   flex: 1;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: space-between;
+  gap: 2rem;
   ${tabletDevice({ flexDirection: "column" })};
 `;
 const Title = styled.h2`
   flex: 1;
   font-size: clamp(1rem, 6vw, 3rem);
   color: hsla(104, 28%, 15%, 1);
+  ${smallDevice({ marginTop: "4rem" })}
 `;
 
 const Regions = () => {

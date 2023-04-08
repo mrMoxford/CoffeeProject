@@ -4,16 +4,17 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { RiShoppingBasket2Line } from "react-icons/ri";
 import { smallDevice, tabletDevice } from "../Responsive";
 import { Link, NavLink } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Badge from "@mui/material/Badge";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getTotals } from "../Redux/CartSlice";
 
 const Container = styled.nav`
   width: 100%;
   padding: 0.5rem 4rem;
   position: fixed;
   z-index: 99;
-  background: rgba(0, 0, 0, 0.7);
+  background: hsla(360, 100%, 100%, .7));
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6.9px);
   -webkit-backdrop-filter: blur(6.9px);
@@ -37,8 +38,13 @@ const Logo = styled(Link)`
   position: absolue;
   text-transform: uppercase;
   text-decoration: none;
-  color: white;
+  color: black;
+  margin: 0;
+  padding: 0;
   ${smallDevice({ fontSize: "1.5rem" })}
+`;
+const LogoSmall = styled(Logo)`
+  color: white;
 `;
 const CenterCol = styled.div`
   flex: 2;
@@ -61,21 +67,23 @@ const NavList = styled.ul`
 
 const Nav = styled(NavLink)`
   text-decoration: none;
+  color: black;
+`;
+const NavMini = styled(Nav)`
   color: white;
 `;
-
 const RightCol = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  ${smallDevice({ display: "none" })}
+  ${tabletDevice({ display: "none" })}
 `;
 
 const NavOpen = styled.div`
   position: absolute;
-  top: 0.7rem;
+  top: 0.5rem;
   right: 4rem;
   display: none;
   justify-content: flex-end;
@@ -92,6 +100,7 @@ const NavMenuSmall = styled.div`
   inset: 0;
   height: 100vh;
   background: hsla(104, 28%, 15%, 1);
+  transition: max-height 500ms ease-in-out;
 `;
 const NavClose = styled.div`
   position: absolute;
@@ -114,7 +123,12 @@ const NavListSmall = styled.ul`
 
 const NavBar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
-  const quantity = useSelector(state => state.cart.cartQuantity);
+  const quantity = useSelector(state => state.cart?.cartQuantity);
+  console.log(quantity);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getTotals()), [quantity];
+  });
   return (
     <Container>
       <Wrapper>
@@ -130,9 +144,9 @@ const NavBar = () => {
           </NavList>
         </CenterCol>
         <RightCol>
-          <Badge badgeContent={1} color="primary">
+          <Badge badgeContent={quantity} color="primary">
             <Nav to="/cart">
-              <RiShoppingBasket2Line color="white" size={"2rem"} />
+              <RiShoppingBasket2Line color="black" size={"2rem"} />
             </Nav>
           </Badge>
           <Nav to="/login">Login</Nav>
@@ -140,7 +154,7 @@ const NavBar = () => {
         </RightCol>
       </Wrapper>
       <NavOpen onClick={() => setMenuToggle(true)}>
-        <HiOutlineMenuAlt3 color="white" size={30} />
+        <HiOutlineMenuAlt3 color="black" size={30} />
       </NavOpen>
       {menuToggle && (
         <NavMenuSmall>
@@ -148,20 +162,20 @@ const NavBar = () => {
             <CgCloseO color="white" size={30} />
           </NavClose>
           <NavLogoContainer>
-            <Logo to="/">ODESSY_JAVA</Logo>
+            <LogoSmall to="/">ODESSY_JAVA</LogoSmall>
           </NavLogoContainer>
           <NavListSmall>
-            <Nav to="/">Home</Nav>
-            <Nav to="/regions">Explore</Nav>
-            <Nav to="/store">Store</Nav>
+            <NavMini to="/">Home</NavMini>
+            <NavMini to="/regions">Explore</NavMini>
+            <NavMini to="/store">Store</NavMini>
             <Badge badgeContent={quantity} color="primary">
-              <Nav to="/cart">
+              <NavMini to="/cart">
                 <RiShoppingBasket2Line color="white" size={"2rem"} />
-              </Nav>
+              </NavMini>
             </Badge>
 
-            <Nav to="/login">Login</Nav>
-            <Nav to="/signup">Signup</Nav>
+            <NavMini to="/login">Login</NavMini>
+            <NavMini to="/signup">Signup</NavMini>
           </NavListSmall>
         </NavMenuSmall>
       )}

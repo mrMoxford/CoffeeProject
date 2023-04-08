@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
 import { tabletDevice, smallDevice, mediumDevice } from "../Responsive";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   incrementQuantity,
   decrementQuantity,
@@ -158,9 +158,12 @@ const Button = styled.button`
 `;
 const ShoppingCart = () => {
   const cart = useSelector(state => state.cart);
-  const param = useParams();
-  console.log(param);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
+
   const handleIncrement = item => {
     dispatch(incrementQuantity(item));
   };
@@ -221,8 +224,8 @@ const ShoppingCart = () => {
         <Summary>
           <SummurayTitle>Order Summary</SummurayTitle>
           <SummurayItem>
-            <SummurayText>Subtotal (2 Items)</SummurayText>
-            <SummurayPrice>¥5000</SummurayPrice>
+            <SummurayText>Subtotal {cart.cartQuantity}</SummurayText>
+            <SummurayPrice>{cart.cartTotal}</SummurayPrice>
           </SummurayItem>
           <SummurayItem>
             <SummurayText>Shipping</SummurayText>
@@ -234,7 +237,7 @@ const ShoppingCart = () => {
           </SummurayItem>
           <SummurayItem type="total">
             <SummurayText>Estimated Total</SummurayText>
-            <SummurayPrice>¥5000</SummurayPrice>
+            <SummurayPrice>{cart.cartTotal}</SummurayPrice>
           </SummurayItem>
           <Button>Checkout Now</Button>
         </Summary>

@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { publicRequest } from "../reqMethods";
 import { tabletDevice, smallDevice } from "../Responsive";
 import { useLocation } from "react-router-dom";
-import { addToCart } from "../Redux/CartSlice";
+import { addToCart, getTotals } from "../Redux/CartSlice";
 import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   padding: 2rem 6rem;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   font-weight: 200;
@@ -98,7 +98,9 @@ const SingleProduct = () => {
       try {
         const res = await publicRequest.get("/products/find/" + id);
         setProduct(res.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     getProduct();
   }, [id]);

@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import NewsLetter from "./NewsLetter";
-import { AiFillFacebook, AiFillInstagram, AiOutlineTwitter, AiFillYoutube } from "react-icons/ai";
+import {
+  AiFillFacebook,
+  AiFillInstagram,
+  AiOutlineTwitter,
+  AiFillYoutube,
+} from "react-icons/ai";
 import { tabletDevice, smallDevice } from "../Responsive";
 const Container = styled.div`
   padding: 2rem 4rem;
@@ -43,7 +48,7 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo>Odessy</Logo>
+        <Logo>ODESSY_JAVA</Logo>
         <SocialMedia>
           <SocialLink href="http://www.facebook.com">
             <AiFillFacebook size={"2rem"} />
