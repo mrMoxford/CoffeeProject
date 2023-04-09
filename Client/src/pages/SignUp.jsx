@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { signup } from "../Redux/apiCalls";
-import { signupSuccess, signupFailure, signupStart } from "../Redux/UserSlice";
+import { signup, reset } from "../features/auth/authSlice";
 const Container = styled.div`
   padding: 2rem 4rem;
   display: flex;
@@ -71,22 +71,62 @@ const ALink = styled(Link)`
   font-size: 0.8rem;
 `;
 const SignUp = () => {
-  const [user, setUser] = useState({
+  const [currentUser, setCurrentUser] = useState({
     name: "",
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const { name, username, email, password, confirmPassword } = Currentuser;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { currentUser, isFetching, isSending, error } = useSelector(
-    state => state.user
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    state => state.auth
   );
-  console.log(user);
-  const { name, username, email, password, confirmPassword } = user;
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  const onChange = e => {
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+    } else {
+      const userData = {
+        name,
+        username,
+        email,
+        password,
+      };
+
+      dispatch(signup(userData));
+    }
+  };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   const handleChange = e => {
-    setUser(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setCurrentUser(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleSubmit = e => {
     e.preventDefault();

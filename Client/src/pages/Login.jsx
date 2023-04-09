@@ -81,9 +81,7 @@ const Login = () => {
     login(dispatch, { username, password });
     console.log(currentUser);
   };
-  useEffect(() => {
-    redirect("/");
-  }, [currentUser]);
+
   return (
     <Container>
       <Wrapper>
