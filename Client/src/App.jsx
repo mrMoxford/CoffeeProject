@@ -9,10 +9,10 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import ShoppingCart from "./pages/ShoppingCart";
 import Footer from "./components/Footer";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 import Error404 from "./pages/Error404";
 
 function App() {

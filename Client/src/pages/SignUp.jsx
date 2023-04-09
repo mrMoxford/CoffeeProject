@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SignUpBg from "../assets/CoffeeImgs/SignUpBg.png";
 import { tabletDevice, smallDevice } from "../Responsive";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { signup } from "../Redux/apiCalls";
+import { signupSuccess, signupFailure, signupStart } from "../Redux/UserSlice";
 const Container = styled.div`
   padding: 2rem 4rem;
   display: flex;
@@ -75,13 +78,26 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { currentUser, isFetching, isSending, error } = useSelector(
+    state => state.user
+  );
+  console.log(user);
+  const { name, username, email, password, confirmPassword } = user;
   const handleChange = e => {
-    setUser(prev => ({ ...prev, [e.target.name]: e.terget.value }));
+    setUser(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleSubmit = e => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+    } else {
+      // const userData = { name, username, email, password };
+      signup(dispatch({ name, username, email, password }));
+    }
   };
-  const { name, username, email, password, confirmPassword } = user;
+
   return (
     <Container>
       <Imagesection></Imagesection>
@@ -90,30 +106,35 @@ const SignUp = () => {
         <Form onSubmit={handleSubmit}>
           <Input
             id="name"
+            name="name"
             value={name}
             onChange={handleChange}
             placeholder="name"
           />
           <Input
             id="username"
+            name="username"
             value={username}
             onChange={handleChange}
             placeholder="username"
           />
           <Input
             id="email"
+            name="email"
             value={email}
             onChange={handleChange}
             placeholder="email"
           />
           <Input
             id="password"
+            name="password"
             value={password}
             onChange={handleChange}
             placeholder="password"
           />
           <Input
             id="confirmPassword"
+            name="confirmPassword"
             value={confirmPassword}
             onChange={handleChange}
             placeholder="confirm password"
