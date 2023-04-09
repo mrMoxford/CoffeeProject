@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SignUpBg from "../assets/CoffeeImgs/SignUpBg.png";
 import { tabletDevice, smallDevice } from "../Responsive";
@@ -68,17 +68,56 @@ const ALink = styled(Link)`
   font-size: 0.8rem;
 `;
 const SignUp = () => {
+  const [user, setUser] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const handleChange = e => {
+    setUser(prev => ({ ...prev, [e.target.name]: e.terget.value }));
+  };
+  const handleSubmit = e => {
+    e.preventDefault();
+  };
+  const { name, username, email, password, confirmPassword } = user;
   return (
     <Container>
       <Imagesection></Imagesection>
       <Wrapper>
         <Title> Create Your Account</Title>
-        <Form>
-          <Input placeholder="name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+        <Form onSubmit={handleSubmit}>
+          <Input
+            id="name"
+            value={name}
+            onChange={handleChange}
+            placeholder="name"
+          />
+          <Input
+            id="username"
+            value={username}
+            onChange={handleChange}
+            placeholder="username"
+          />
+          <Input
+            id="email"
+            value={email}
+            onChange={handleChange}
+            placeholder="email"
+          />
+          <Input
+            id="password"
+            value={password}
+            onChange={handleChange}
+            placeholder="password"
+          />
+          <Input
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={handleChange}
+            placeholder="confirm password"
+          />
           <Agreement>
             We collect and use your personal information solely to fulfill your
             orders and provide you with our services, and we do not share your

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import LoginBg from "../assets/CoffeeImgs/LoginBg.png";
 import { tabletDevice, smallDevice } from "../Responsive";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
+import { login } from "../Redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
 const Container = styled.div`
   padding: 2rem 4rem;
   display: flex;
@@ -57,6 +59,11 @@ const Button = styled.button`
   background: hsla(360, 65%, 20%, 1);
   border: none;
   cursor: pointer;
+  &: disabled {background: lightgray, cursor:not-allowed
+  }
+`;
+const Message = styled.span`
+  color: red;
 `;
 const ALink = styled(Link)`
   text-decoration: none;
@@ -64,16 +71,37 @@ const ALink = styled(Link)`
   font-size: 0.8rem;
 `;
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching, error, currentUser } = useSelector(state => state.user);
+
+  const handleClick = e => {
+    e.preventDefault();
+    login(dispatch, { username, password });
+    console.log(currentUser);
+  };
+  useEffect(() => {
+    redirect("/");
+  }, [currentUser]);
   return (
     <Container>
       <Wrapper>
         <Title> Login To Your Account</Title>
         <Form>
-          <Input placeholder="username" />
+          <Input
+            placeholder="username"
+            onChange={e => setUsername(e.target.value)}
+          />
 
-          <Input placeholder="password" />
-
-          <Button>Log In</Button>
+          <Input
+            placeholder="password"
+            onChange={e => setPassword(e.target.value)}
+          />
+          {error && <Message>Something went wrong</Message>}
+          <Button onClick={handleClick} disabled={isFetching}>
+            Log In
+          </Button>
           <ALink>Forgot your password?</ALink>
           <ALink to="/signup">Don't have an account? </ALink>
         </Form>

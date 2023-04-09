@@ -12,6 +12,19 @@ import Footer from "./components/Footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Error404 from "./pages/Error404";
+
+function App() {
+  return (
+    <div>
+      <ToastContainer />
+      <RouterProvider router={router} />
+    </div>
+  );
+}
+
+export default App;
 
 const Layout = () => {
   return (
@@ -27,6 +40,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <Error404 />,
     children: [
       {
         path: "/",
@@ -53,23 +67,16 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <ShoppingCart />,
+    errorElement: <Error404 />,
   },
   {
     path: "/signup",
     element: <SignUp />,
+    errorElement: <Error404 />,
   },
   {
     path: "/login",
     element: <Login />,
+    errorElement: <Error404 />,
   },
 ]);
-function App() {
-  return (
-    <div>
-      <ToastContainer />
-      <RouterProvider router={router} />
-    </div>
-  );
-}
-
-export default App;
