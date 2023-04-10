@@ -3,10 +3,11 @@ import { CgCloseO } from "react-icons/cg";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { RiShoppingBasket2Line } from "react-icons/ri";
 import { smallDevice, tabletDevice } from "../Responsive";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Badge from "@mui/material/Badge";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, reset } from "../Redux/auth/authSlice";
 
 const Container = styled.nav`
   width: 100%;
@@ -17,6 +18,7 @@ const Container = styled.nav`
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6.9px);
   -webkit-backdrop-filter: blur(6.9px);
+  font-size: 1rem;
   ${smallDevice({ padding: "1rem" })}
 `;
 const Wrapper = styled.div`
@@ -59,14 +61,18 @@ const NavList = styled.ul`
   gap: 2rem;
   width: 100%;
   padding: 0;
-  font-size: 1rem;
+
   text-transform: uppercase;
   list-style: none;
 `;
 
 const Nav = styled(NavLink)`
   text-decoration: none;
+  text-transform: uppercase;
   color: black;
+  &.active {
+    color: red;
+  }
 `;
 const NavMini = styled(Nav)`
   color: white;
@@ -80,7 +86,13 @@ const RightCol = styled.div`
   text-transform: uppercase;
   ${tabletDevice({ display: "none" })}
 `;
-
+const Logout = styled.button`
+  background: transparent;
+  border: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: ${props => props.type === "navLogout" && "white"};
+`;
 const NavOpen = styled.div`
   position: absolute;
   top: 0.5rem;
@@ -124,7 +136,15 @@ const NavListSmall = styled.ul`
 const NavBar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
   const quantity = useSelector(state => state.cart?.cartQuantity);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth);
 
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  };
   return (
     <Container>
       <Wrapper>
@@ -145,8 +165,14 @@ const NavBar = () => {
               <RiShoppingBasket2Line color="black" size={"2rem"} />
             </Nav>
           </Badge>
-          <Nav to="/login">Login</Nav>
-          <Nav to="/signup">Signup</Nav>
+          {user ? (
+            <Logout onClick={handleLogout}>Logout</Logout>
+          ) : (
+            <>
+              <Nav to="/login">Login</Nav>
+              <Nav to="/signup">Signup</Nav>
+            </>
+          )}
         </RightCol>
       </Wrapper>
       <NavOpen onClick={() => setMenuToggle(true)}>
@@ -170,8 +196,16 @@ const NavBar = () => {
               </NavMini>
             </Badge>
 
-            <NavMini to="/login">Login</NavMini>
-            <NavMini to="/signup">Signup</NavMini>
+            {user ? (
+              <Logout type="navLogout" onClick={handleLogout}>
+                Logout
+              </Logout>
+            ) : (
+              <>
+                <NavMini to="/login">Login</NavMini>
+                <NavMini to="/signup">Signup</NavMini>
+              </>
+            )}
           </NavListSmall>
         </NavMenuSmall>
       )}

@@ -8,6 +8,7 @@ import {
   AiFillYoutube,
 } from "react-icons/ai";
 import { tabletDevice, smallDevice } from "../Responsive";
+import { Link } from "react-router-dom";
 const Container = styled.div`
   padding: 2rem 4rem;
   display: flex;
@@ -24,7 +25,9 @@ const Left = styled.div`
   justify-content: space-between;
   align-items: flex-start;
 `;
-const Logo = styled.h1`
+const Logo = styled(Link)`
+  text-decoration: none;
+  color: white;
   text-transform: uppercase;
   font-size: clamp(1.5rem, 5vw, 3rem);
   font-weight: 200;
@@ -45,7 +48,7 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo>ODESSY_JAVA</Logo>
+        <Logo to="/">ODESSY_JAVA</Logo>
         <SocialMedia>
           <SocialLink href="http://www.facebook.com">
             <AiFillFacebook size={"2rem"} />

@@ -4,16 +4,16 @@ import { publicRequest } from "../../reqMethods";
 const signup = async userData => {
   const res = await publicRequest.post("auth/signup", userData);
 
-  if (response.data) {
+  if (res.data) {
     localStorage.setItem("user", JSON.stringify(res.data));
   }
 
-  return response.data;
+  return res.data;
 };
 
 // Login user
 const login = async userData => {
-  const res = await publicRequest.post("auth/signup", userData);
+  const res = await publicRequest.post("auth/login", userData);
 
   if (res.data) {
     localStorage.setItem("user", JSON.stringify(res.data));

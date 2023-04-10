@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import LoginBg from "../assets/CoffeeImgs/LoginBg.png";
 import { tabletDevice, smallDevice } from "../Responsive";
-import { Link, redirect } from "react-router-dom";
-import { login } from "../Redux/apiCalls";
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { login, reset } from "../Redux/auth/authSlice";
+import Spinner from "../components/Spinner";
 const Container = styled.div`
   padding: 2rem 4rem;
   display: flex;
@@ -59,8 +62,6 @@ const Button = styled.button`
   background: hsla(360, 65%, 20%, 1);
   border: none;
   cursor: pointer;
-  &: disabled {background: lightgray, cursor:not-allowed
-  }
 `;
 const Message = styled.span`
   color: red;
@@ -74,19 +75,42 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isFetching, error, currentUser } = useSelector(state => state.user);
+  const navigate = useNavigate();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    state => state.auth
+  );
 
-  const handleClick = e => {
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+  const handleSubmit = e => {
     e.preventDefault();
-    login(dispatch, { username, password });
-    console.log(currentUser);
+
+    const userData = {
+      username,
+      password,
+    };
+
+    dispatch(login(userData));
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Container>
       <Wrapper>
         <Title> Login To Your Account</Title>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Input
             placeholder="username"
             onChange={e => setUsername(e.target.value)}
@@ -96,10 +120,8 @@ const Login = () => {
             placeholder="password"
             onChange={e => setPassword(e.target.value)}
           />
-          {error && <Message>Something went wrong</Message>}
-          <Button onClick={handleClick} disabled={isFetching}>
-            Log In
-          </Button>
+          {isError && <Message>Something went wrong</Message>}
+          <Button>Log In</Button>
           <ALink>Forgot your password?</ALink>
           <ALink to="/signup">Don't have an account? </ALink>
         </Form>

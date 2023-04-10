@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import SignUpBg from "../assets/CoffeeImgs/SignUpBg.png";
 import { tabletDevice, smallDevice } from "../Responsive";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { signup } from "../Redux/apiCalls";
-import { signup, reset } from "../features/auth/authSlice";
+import { signup, reset } from "../Redux/auth/authSlice";
+import Spinner from "../components/Spinner";
 const Container = styled.div`
   padding: 2rem 4rem;
   display: flex;
@@ -71,20 +71,18 @@ const ALink = styled(Link)`
   font-size: 0.8rem;
 `;
 const SignUp = () => {
-  const [currentUser, setCurrentUser] = useState({
-    name: "",
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const { name, username, email, password, confirmPassword } = Currentuser;
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     state => state.auth
   );
-
+  console.log(user);
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -93,50 +91,22 @@ const SignUp = () => {
     if (isSuccess || user) {
       navigate("/");
     }
-
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  const onChange = e => {
-    setFormData(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const onSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
     } else {
-      const userData = {
-        name,
-        username,
-        email,
-        password,
-      };
-
-      dispatch(signup(userData));
+      dispatch(signup({ name, username, email, password }));
     }
   };
 
   if (isLoading) {
     return <Spinner />;
   }
-
-  const handleChange = e => {
-    setCurrentUser(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-    } else {
-      // const userData = { name, username, email, password };
-      signup(dispatch({ name, username, email, password }));
-    }
-  };
 
   return (
     <Container>
@@ -148,35 +118,35 @@ const SignUp = () => {
             id="name"
             name="name"
             value={name}
-            onChange={handleChange}
+            onChange={e => setName(e.target.value)}
             placeholder="name"
           />
           <Input
             id="username"
             name="username"
             value={username}
-            onChange={handleChange}
+            onChange={e => setUsername(e.target.value)}
             placeholder="username"
           />
           <Input
             id="email"
             name="email"
             value={email}
-            onChange={handleChange}
+            onChange={e => setEmail(e.target.value)}
             placeholder="email"
           />
           <Input
             id="password"
             name="password"
             value={password}
-            onChange={handleChange}
+            onChange={e => setPassword(e.target.value)}
             placeholder="password"
           />
           <Input
             id="confirmPassword"
             name="confirmPassword"
             value={confirmPassword}
-            onChange={handleChange}
+            onChange={e => setConfirmPassword(e.target.value)}
             placeholder="confirm password"
           />
           <Agreement>
