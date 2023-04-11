@@ -2,8 +2,7 @@ import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import styled from "styled-components";
 
-const KEY =
-  "pk_test_51MsZY4D4nqZRu3956em5Ms0jVUXpcRXtuc0QhRyLUa1Z99bAWrXPjpDZLJeeMlIRQYK7U0RV9u0WB6l9RIOemnCd00777oBCti";
+const KEY = import.meta.env.VITE_REACT_STRIPE_PUBLIC_KEY;
 const Container = styled.div`
   display: flex;
   justify-content: center;

@@ -160,7 +160,7 @@ const NavBar = () => {
           </NavList>
         </CenterCol>
         <RightCol>
-          <Badge badgeContent={quantity} color="primary">
+          <Badge badgeContent={quantity} color="warning">
             <Nav to="/cart">
               <RiShoppingBasket2Line color="black" size={"2rem"} />
             </Nav>

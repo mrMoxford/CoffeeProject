@@ -4,7 +4,9 @@ import { HiMinus, HiPlus } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
 import { tabletDevice, smallDevice, mediumDevice } from "../Responsive";
 import { useDispatch, useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
 import { Link } from "react-router-dom";
+const KEY = import.meta.env.VITE_REACT_STRIPE_PUBLIC_KEY;
 import {
   incrementQuantity,
   decrementQuantity,
@@ -38,6 +40,7 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   ${mediumDevice({ flexDirection: "column" })};
 `;
 const Sections = styled.div`
@@ -68,29 +71,48 @@ const TopButton = styled(Link)`
 
 const Bottomsection = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
   align-items: center;
 `;
 const Info = styled.div`
   flex: 3;
-`;
-const CartItems = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  ${tabletDevice({ flexDirection: "column" })};
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+`;
+const CartItem = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
+  column-gap: 2rem;
+  place-content: center;
+
+  ${tabletDevice({
+    gridTemplateColumns: "repeat(autofit,1fr, minmax(1rem, 2rem))",
+    gap: "1rem",
+  })};
+  ${smallDevice({ flexDirection: "column" })}
 `;
 const CartItemThumbnail = styled.img`
   width: 5rem;
   aspect-ratio: 1;
 `;
-const CartItemName = styled.p``;
-const CartItemDetails = styled.p``;
+const CartItemName = styled.p`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+const CartItemDetails = styled.p`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+`;
 const QuantityContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 const ItemQuatity = styled.p`
   padding: 0.5rem;
@@ -120,13 +142,15 @@ const ClearButton = styled.button`
 `;
 const Summary = styled.div`
   flex: 1;
-  height: 50vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  background: white;
+  background: hsla(104, 28%, 15%, 1);
+  color: white;
   padding: 1rem;
+  ${mediumDevice({ width: "100%" })};
 `;
 
 const SummurayTitle = styled.h2`
@@ -144,22 +168,38 @@ const SummurayItem = styled.div`
 `;
 const SummurayText = styled.span``;
 const SummurayPrice = styled.span``;
-const Button = styled.button`
-  width: 100%;
+const CheckoutButton = styled.button`
   padding: 1rem;
   outline: transparent;
   cursor: pointer;
-  border: 2px solid hsla(0, 0%, 0%, 0.21);
+  margin-inline: auto;
+  color: white;
+  border: 2px solid white;
   background: transparent;
   &:hover {
     background-color: hsla(360, 65%, 20%, 1);
-    color: white;
   }
 `;
+const CartTitleContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
+  column-gap: 2rem;
+  ${tabletDevice({ display: "none" })};
+`;
+const CartTitle = styled.h3`
+  text-transform: uppercase;
+  font-weight: 300;
+`;
+const Delete = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const Empty = styled.p``;
 const ShoppingCart = () => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-
+  const onToken = token => {};
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
@@ -189,38 +229,56 @@ const ShoppingCart = () => {
           </Topsection>
 
           <Bottomsection>
-            <Info>
-              {cart.products.map(item => (
-                <CartItems key={item._id}>
-                  <CartItemThumbnail
-                    src={item.image}
-                    alt={item.name}
-                  ></CartItemThumbnail>
-                  <CartItemName>{item.name}</CartItemName>
-                  <CartItemDetails>
-                    100g <i>whole beans</i>
-                  </CartItemDetails>
-                  <QuantityContainer>
-                    <ItemPrice> {item.price * item.quantity} </ItemPrice>
-                    <HiMinus
-                      onClick={() => handleDecrement(item)}
-                      cursor="pointer"
-                    />
-                    <ItemQuatity>{item.quantity}</ItemQuatity>
-                    <HiPlus
-                      onClick={() => handleIncrement(item)}
-                      cursor="pointer"
-                    />
-                  </QuantityContainer>
-                  <TiDelete
-                    onClick={() => handleRemove(item)}
-                    size={40}
-                    cursor="pointer"
-                  />
-                </CartItems>
-              ))}
-            </Info>
-            <Hr />
+            {cart.cartQuantity ? (
+              <>
+                {" "}
+                <CartTitleContainer>
+                  <CartTitle>Image</CartTitle>
+                  <CartTitle>Name</CartTitle>
+                  <CartTitle>Size</CartTitle>
+                  <CartTitle>Price</CartTitle>
+                  <CartTitle>Product Quantity</CartTitle>
+                </CartTitleContainer>
+                <Info>
+                  <Hr />
+                  {cart.products.map(item => (
+                    <CartItem key={item._id}>
+                      <CartItemThumbnail
+                        src={item.image}
+                        alt={item.name}
+                      ></CartItemThumbnail>
+                      <CartItemName>{item.name}</CartItemName>
+                      <CartItemDetails>
+                        100g <i>whole beans</i>
+                      </CartItemDetails>
+
+                      <ItemPrice> {item.price * item.quantity} </ItemPrice>
+                      <QuantityContainer>
+                        <HiMinus
+                          onClick={() => handleDecrement(item)}
+                          cursor="pointer"
+                        />
+                        <ItemQuatity>{item.quantity}</ItemQuatity>
+                        <HiPlus
+                          onClick={() => handleIncrement(item)}
+                          cursor="pointer"
+                        />
+                      </QuantityContainer>
+                      <Delete>
+                        <TiDelete
+                          onClick={() => handleRemove(item)}
+                          size={40}
+                          cursor="pointer"
+                        />
+                      </Delete>
+                    </CartItem>
+                  ))}
+                  <Hr />
+                </Info>{" "}
+              </>
+            ) : (
+              <Empty> Your cart is empty please start shopping </Empty>
+            )}
           </Bottomsection>
           <ClearButton onClick={handleClearCart}>Clear Cart</ClearButton>
         </Sections>
@@ -228,23 +286,37 @@ const ShoppingCart = () => {
           <SummurayTitle>Order Summary</SummurayTitle>
           <SummurayItem>
             <SummurayText>Subtotal ({cart.cartQuantity})</SummurayText>
-            <SummurayPrice>{cart.cartTotal}</SummurayPrice>
+            <SummurayPrice>{`¥${cart.cartTotal}`}</SummurayPrice>
           </SummurayItem>
           <SummurayItem>
             <SummurayText>Shipping</SummurayText>
-            <SummurayPrice>{cartShipping}</SummurayPrice>
+            <SummurayPrice>{`¥${cartShipping}`}</SummurayPrice>
           </SummurayItem>
           <SummurayItem>
             <SummurayText>Discount</SummurayText>
-            <SummurayPrice>{cartDiscount}</SummurayPrice>
+            <SummurayPrice>{`¥${cartDiscount}`}</SummurayPrice>
           </SummurayItem>
           <SummurayItem type="total">
             <SummurayText>Estimated Total</SummurayText>
             <SummurayPrice>
-              {cart.cartTotal + cartShipping - cartDiscount}
+              {` ¥${cart.cartTotal + cartShipping - cartDiscount}`}
             </SummurayPrice>
           </SummurayItem>
-          <Button>Checkout Now</Button>
+          <StripeCheckout
+            style={{ border: "2px solid white" }}
+            name="Oddesy_Coffee"
+            image="../../public/ODESSY_JAVA.png"
+            billingAddress
+            shippingAddress
+            description={`Your cart total is ¥ ${
+              cart.cartTotal + cartShipping - cartDiscount
+            }`}
+            amount={cart.cartTotal + cartShipping - cartDiscount}
+            token={onToken}
+            stripeKey={KEY}
+          >
+            <CheckoutButton>Checkout Now</CheckoutButton>
+          </StripeCheckout>
         </Summary>
       </Wrapper>
     </Container>
