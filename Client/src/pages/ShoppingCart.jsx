@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
 import { tabletDevice, smallDevice, mediumDevice } from "../Responsive";
 import { useDispatch, useSelector } from "react-redux";
-import StripeCheckout from "react-stripe-checkout";
-import { Link, useNavigate } from "react-router-dom";
-const KEY = import.meta.env.VITE_REACT_STRIPE_PUBLIC_KEY;
+import { BASE_URL } from "../reqMethods";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   incrementQuantity,
   decrementQuantity,
@@ -220,12 +220,8 @@ const Delete = styled.div`
 `;
 const Empty = styled.p``;
 const ShoppingCart = () => {
-  const [stripeToken, setStripeToken] = useState(null);
-  const navigate = useNavigate();
-  const onToken = token => {
-    setStripeToken(token);
-  };
   const cart = useSelector(state => state.cart);
+  const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTotals());
@@ -243,28 +239,23 @@ const ShoppingCart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+  const handleCheckout = products => {
+    axios
+      .post(`${BASE_URL}/checkout/create-checkout-session`, {
+        products,
+        userId: user._id,
+      })
+      .then(response => {
+        if (response.data.url) {
+          window.location.href = response.data.url;
+        }
+      })
+      .catch(err => console.log(err.message));
+  };
 
   const cartShipping = cart.cartQuantity === 0 ? 0 : cart.shipping;
   const cartDiscount = cart.cartTotal < 10000 ? 0 : cart.discount;
   const summaryTotal = cart.cartTotal + cartShipping - cartDiscount;
-  useEffect(() => {
-    const makeRequest = async () => {
-      try {
-        const res = await userRequest.post("/payment", {
-          tokenId: stripeToken.id,
-          amount: { summaryTotal },
-        });
-        navigate("/success", {
-          stripeData: res.data,
-          products: cart,
-        });
-        dispatch(clearCart());
-      } catch (err) {
-        console.err(err);
-      }
-    };
-    stripeToken && makeRequest();
-  }, [stripeToken, cart.total, history]);
 
   return (
     <Container>
@@ -352,18 +343,10 @@ const ShoppingCart = () => {
             <SummurayText>Estimated Total</SummurayText>
             <SummurayPrice>{` ¥${summaryTotal.toLocaleString()}`}</SummurayPrice>
           </SummurayItem>
-          <StripeCheckout
-            name="Oddesy_Coffee"
-            image="/ODESSY_JAVA.png"
-            billingAddress
-            shippingAddress
-            description={`Your cart total is ¥ ${summaryTotal}`}
-            amount={summaryTotal}
-            token={onToken}
-            stripeKey={KEY}
-          >
-            <CheckoutButton>Checkout Now</CheckoutButton>
-          </StripeCheckout>
+
+          <CheckoutButton onClick={() => handleCheckout(cart.products)}>
+            Checkout Now
+          </CheckoutButton>
         </Summary>
       </Wrapper>
     </Container>
