@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import ShoppingCart from "./pages/ShoppingCart";
 import Footer from "./components/Footer";
+import Success from "./pages/Success";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/store/:id",
         element: <SingleProduct />,
+      },
+      {
+        path: "/success",
+        element: <Success />,
       },
     ],
   },

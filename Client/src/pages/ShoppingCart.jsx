@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
 import { tabletDevice, smallDevice, mediumDevice } from "../Responsive";
 import { useDispatch, useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const KEY = import.meta.env.VITE_REACT_STRIPE_PUBLIC_KEY;
 import {
   incrementQuantity,
@@ -26,7 +26,7 @@ const Container = styled.div`
   font-size: 1.2rem;
   background: hsla(0, 0%, 85%, 0.5);
 
-  ${smallDevice({ padding: "1rem" })};
+  ${smallDevice({ padding: "1rem", fontSize: "1rem" })};
 `;
 const Title = styled.h1`
   margin-bottom: 4rem;
@@ -51,6 +51,7 @@ const Sections = styled.div`
   align-items: flex-start;
   margin-right: 4rem;
   ${tabletDevice({ margin: "0" })};
+  ${smallDevice({ alignItems: "center" })};
 `;
 const Topsection = styled.div`
   display: flex;
@@ -84,35 +85,51 @@ const Info = styled.div`
   gap: 2rem;
 `;
 const CartItem = styled.div`
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
-  column-gap: 2rem;
+  grid-template-areas: "image name  size price quantity delete";
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
   place-content: center;
+  place-items: center start;
+  text-align: start;
+  column-gap: 2rem;
 
-  ${tabletDevice({
-    gridTemplateColumns: "repeat(autofit,1fr, minmax(1rem, 2rem))",
-    gap: "1rem",
-  })};
-  ${smallDevice({ flexDirection: "column" })}
+  @media (max-width: 56.25em) {
+    grid-template-areas: "image quantity size" "name price delete";
+    grid-template-columns: repeat(3, 1fr);
+    place-content: center;
+    place-items: center;
+    text-align: center;
+  }
+  @media (max-width: 31.25em) {
+    grid-template-areas: "image quantity" "name price" "size delete";
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
 `;
+//gridTemplateAreas: "image size quantity", "name . price delete"},
 const CartItemThumbnail = styled.img`
   width: 5rem;
   aspect-ratio: 1;
+  gride-area: image;
 `;
 const CartItemName = styled.p`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  grid-area: name;
 `;
-const CartItemDetails = styled.p`
+const CartItemDetails = styled.i`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  grid-area: size;
 `;
 const QuantityContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  grid-area: quantity;
 `;
 const ItemQuatity = styled.p`
   padding: 0.5rem;
@@ -124,11 +141,13 @@ const ItemPrice = styled.p`
   align-items: center;
   justify-content: center;
   margin-right: 1rem;
+  grid-area: price;
 `;
 const Hr = styled.hr`
   background-color: hsla(360, 65%, 20%, 0.1);
   border: none;
   height: 1px;
+  width: 100%;
 `;
 const ClearButton = styled.button`
   font-size: 1.5rem;
@@ -142,13 +161,14 @@ const ClearButton = styled.button`
 `;
 const Summary = styled.div`
   flex: 1;
-  height: 100%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   background: hsla(104, 28%, 15%, 1);
   color: white;
+  gap: 2rem;
   padding: 1rem;
   ${mediumDevice({ width: "100%" })};
 `;
@@ -182,8 +202,10 @@ const CheckoutButton = styled.button`
 `;
 const CartTitleContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
-  column-gap: 2rem;
+  grid-template-areas: "imageTitle nameTitle nameTitle sizeTitle priceTitle quantityTitle deleteTitle ";
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+  place-items: start;
+  place-content: start;
   ${tabletDevice({ display: "none" })};
 `;
 const CartTitle = styled.h3`
@@ -194,12 +216,17 @@ const Delete = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  grid-area: delete;
 `;
 const Empty = styled.p``;
 const ShoppingCart = () => {
+  const [stripeToken, setStripeToken] = useState(null);
+  const navigate = useNavigate();
+  const onToken = token => {
+    setStripeToken(token);
+  };
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const onToken = token => {};
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
@@ -216,8 +243,28 @@ const ShoppingCart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+
   const cartShipping = cart.cartQuantity === 0 ? 0 : cart.shipping;
   const cartDiscount = cart.cartTotal < 10000 ? 0 : cart.discount;
+  const summaryTotal = cart.cartTotal + cartShipping - cartDiscount;
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/payment", {
+          tokenId: stripeToken.id,
+          amount: { summaryTotal },
+        });
+        navigate("/success", {
+          stripeData: res.data,
+          products: cart,
+        });
+        dispatch(clearCart());
+      } catch (err) {
+        console.err(err);
+      }
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken, cart.total, history]);
 
   return (
     <Container>
@@ -239,8 +286,8 @@ const ShoppingCart = () => {
                   <CartTitle>Price</CartTitle>
                   <CartTitle>Product Quantity</CartTitle>
                 </CartTitleContainer>
+                <Hr />
                 <Info>
-                  <Hr />
                   {cart.products.map(item => (
                     <CartItem key={item._id}>
                       <CartItemThumbnail
@@ -249,10 +296,15 @@ const ShoppingCart = () => {
                       ></CartItemThumbnail>
                       <CartItemName>{item.name}</CartItemName>
                       <CartItemDetails>
-                        100g <i>whole beans</i>
+                        <i> 100g whole beans</i>
                       </CartItemDetails>
 
-                      <ItemPrice> {item.price * item.quantity} </ItemPrice>
+                      <ItemPrice>
+                        {" "}
+                        {` ¥${(
+                          item.price * item.quantity
+                        ).toLocaleString()}`}{" "}
+                      </ItemPrice>
                       <QuantityContainer>
                         <HiMinus
                           onClick={() => handleDecrement(item)}
@@ -273,8 +325,8 @@ const ShoppingCart = () => {
                       </Delete>
                     </CartItem>
                   ))}
-                  <Hr />
                 </Info>{" "}
+                <Hr />
               </>
             ) : (
               <Empty> Your cart is empty please start shopping </Empty>
@@ -286,32 +338,27 @@ const ShoppingCart = () => {
           <SummurayTitle>Order Summary</SummurayTitle>
           <SummurayItem>
             <SummurayText>Subtotal ({cart.cartQuantity})</SummurayText>
-            <SummurayPrice>{`¥${cart.cartTotal}`}</SummurayPrice>
+            <SummurayPrice>{`¥${cart.cartTotal.toLocaleString()}`}</SummurayPrice>
           </SummurayItem>
           <SummurayItem>
             <SummurayText>Shipping</SummurayText>
-            <SummurayPrice>{`¥${cartShipping}`}</SummurayPrice>
+            <SummurayPrice>{`¥${cartShipping.toLocaleString()}`}</SummurayPrice>
           </SummurayItem>
           <SummurayItem>
             <SummurayText>Discount</SummurayText>
-            <SummurayPrice>{`¥${cartDiscount}`}</SummurayPrice>
+            <SummurayPrice>{`¥${cartDiscount.toLocaleString()}`}</SummurayPrice>
           </SummurayItem>
           <SummurayItem type="total">
             <SummurayText>Estimated Total</SummurayText>
-            <SummurayPrice>
-              {` ¥${cart.cartTotal + cartShipping - cartDiscount}`}
-            </SummurayPrice>
+            <SummurayPrice>{` ¥${summaryTotal.toLocaleString()}`}</SummurayPrice>
           </SummurayItem>
           <StripeCheckout
-            style={{ border: "2px solid white" }}
             name="Oddesy_Coffee"
-            image="../../public/ODESSY_JAVA.png"
+            image="/ODESSY_JAVA.png"
             billingAddress
             shippingAddress
-            description={`Your cart total is ¥ ${
-              cart.cartTotal + cartShipping - cartDiscount
-            }`}
-            amount={cart.cartTotal + cartShipping - cartDiscount}
+            description={`Your cart total is ¥ ${summaryTotal}`}
+            amount={summaryTotal}
             token={onToken}
             stripeKey={KEY}
           >

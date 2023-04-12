@@ -15,7 +15,7 @@ const H1 = styled.h1`
 `;
 const P = styled.p`
   font-size: 2rem;
-  background: blue;
+  background: red;
   color: white;
 `;
 const LittleP = styled.p`

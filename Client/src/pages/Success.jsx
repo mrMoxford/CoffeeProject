@@ -10,7 +10,7 @@ const Container = styled.div`
   font-size: 3rem;
 `;
 const PaymentSuccessful = styled.p`
-  background: blue;
+  background: red;
 `;
 const Small = styled.p`
   font-size: 1.5rem;

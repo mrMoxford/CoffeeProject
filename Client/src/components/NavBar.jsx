@@ -190,11 +190,12 @@ const NavBar = () => {
             <NavMini to="/">Home</NavMini>
             <NavMini to="/regions">Explore</NavMini>
             <NavMini to="/store">Store</NavMini>
-            <Badge badgeContent={quantity} color="primary">
-              <NavMini to="/cart">
+
+            <NavMini to="/cart">
+              <Badge badgeContent={quantity} color="warning">
                 <RiShoppingBasket2Line color="white" size={"2rem"} />
-              </NavMini>
-            </Badge>
+              </Badge>
+            </NavMini>
 
             {user ? (
               <Logout type="navLogout" onClick={handleLogout}>

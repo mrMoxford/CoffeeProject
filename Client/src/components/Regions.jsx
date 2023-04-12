@@ -28,6 +28,7 @@ const Title = styled.h2`
   width: 50%;
   font-size: clamp(1rem, 6vw, 3rem);
   color: black;
+  ${tabletDevice({ width: "100%" })}
   ${smallDevice({ marginTop: "4rem" })}
 `;
 
