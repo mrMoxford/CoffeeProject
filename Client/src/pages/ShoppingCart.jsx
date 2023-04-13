@@ -192,13 +192,15 @@ const CheckoutButton = styled.button`
   padding: 1rem;
   outline: transparent;
   cursor: pointer;
-  margin-inline: auto;
+  width: 100%;
   color: white;
   border: 2px solid white;
   background: transparent;
   &:hover {
     background-color: hsla(360, 65%, 20%, 1);
   }
+  ${mediumDevice({ width: "50%" })};
+  ${tabletDevice({ width: "100%" })};
 `;
 const CartTitleContainer = styled.div`
   display: grid;
