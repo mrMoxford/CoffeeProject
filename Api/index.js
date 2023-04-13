@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 require("dotenv").config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -9,12 +10,6 @@ const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/StripeCheckout");
 
-const corsOptions = {
-  origin: "http://localhost:5173",
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
 const app = express();
 
 const mongoose = require("mongoose");
@@ -37,6 +32,16 @@ app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
+
+// serve front end
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../CLient/dist")));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "../", "Client", "dist", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => res.send("please set to production"));
+}
 app.listen(process.env.PORT || 5000, () => {
   console.log("Api is running!");
 });
