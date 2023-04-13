@@ -4,9 +4,7 @@
   "description": "coffee e-commerce store app",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "client": "npm start --prefix Client",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Client && npm run build --prefix Client"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "Mox",
