@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const cors = require("cors");
 const {
   verifyToken,
   verifyTokenAndAuthorization,
@@ -47,7 +48,7 @@ delete router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //Get Product
-router.get("/find/:id", async (req, res) => {
+router.get("/find/:id", cors(), async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
 
@@ -57,7 +58,7 @@ router.get("/find/:id", async (req, res) => {
   }
 });
 // //Get All Products
-router.get("/", async (req, res) => {
+router.get("/", cors(), async (req, res) => {
   const qNew = req.query.new;
   const qCountry = req.query.country;
   const qRegion = req.query.region;

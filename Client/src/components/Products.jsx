@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { BASE_URL } from "../reqMethods";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Product from "./Product";
@@ -26,8 +27,8 @@ const Products = ({ region }) => {
       try {
         const res = await axios.get(
           region
-            ? `http://localhost:5000/api/products?region=${region}`
-            : "http://localhost:5000/api/products"
+            ? `${BASE_URL}/products?region=${region}`
+            : `${BASE_URL}/products`
         );
         setProducts(res.data);
       } catch (err) {

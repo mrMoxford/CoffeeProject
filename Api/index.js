@@ -11,7 +11,11 @@ const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/StripeCheckout");
 
 const app = express();
-
+app.use(
+  cors({
+    origin: "http://localhost:5000/api",
+  })
+);
 const mongoose = require("mongoose");
 
 mongoose
