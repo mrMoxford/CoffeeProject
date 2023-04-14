@@ -11,10 +11,14 @@ const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/StripeCheckout");
 
 const app = express();
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
 const corsOptions = {
-  origin: ["https://coffee-explorer.herokuapp.com/", "http://localhost:5000"],
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
-  credentials: true,
+  optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions));
 const mongoose = require("mongoose");
@@ -39,9 +43,9 @@ app.use("/api/checkout", stripeRoute);
 
 // serve front end
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../CLient/dist")));
+  app.use(express.static(path.join(__dirname, "../Client/dist")));
   app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "../", "Client", "dist", "index.html"))
+    res.sendFile(path.resolve(__dirname, "../Client/dist/index.html"))
   );
 } else {
   app.get("/", (req, res) => res.send("please set to production"));
