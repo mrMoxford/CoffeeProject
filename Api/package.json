@@ -4,7 +4,12 @@
   "description": "coffee e-commerce store app",
   "main": "index.js",
   "scripts": {
-    "start": " node index.js"
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "Mox",
@@ -19,6 +24,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "nodemon": "^2.0.22",
+    "serve": "^14.2.0",
     "serverless-http": "^3.2.0",
     "stripe": "^11.18.0"
   },
