@@ -11,11 +11,12 @@ const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/StripeCheckout");
 
 const app = express();
-app.use(
-  cors({
-    origin: "http://localhost:5000/api",
-  })
-);
+const corsOptions = {
+  origin: ["https://coffee-explorer.herokuapp.com/", "http://localhost:5000"],
+  preflightContinue: false,
+  credentials: true,
+};
+app.use(cors(corsOptions));
 const mongoose = require("mongoose");
 
 mongoose
@@ -27,7 +28,6 @@ mongoose
   .catch(err => console.log(err));
 //middlewares
 app.use(bodyParser.json());
-app.use(cors());
 
 app.use(express.json());
 app.use("/api/auth", authRoute);
