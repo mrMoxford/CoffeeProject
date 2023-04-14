@@ -4,7 +4,7 @@
   "description": "coffee e-commerce store app",
   "main": "index.js",
   "scripts": {
-    "start": "index.js"
+    "start": " node index.js"
   },
   "keywords": [],
   "author": "Mox",
