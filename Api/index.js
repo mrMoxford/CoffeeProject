@@ -11,11 +11,9 @@ const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/StripeCheckout");
 
 const app = express();
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
 
 app.use(cors());
+
 const mongoose = require("mongoose");
 
 mongoose

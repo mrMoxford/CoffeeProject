@@ -4,12 +4,10 @@
   "description": "coffee e-commerce store app",
   "main": "index.js",
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "start": "node api/index.js",
+    "server": "nodemon api/index.js",
+    "client": "npm run dev --prefix Client",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Client && npm run build --prefix Client"
   },
   "keywords": [],
   "author": "Mox",
