@@ -128,6 +128,7 @@ const SignUp = () => {
             placeholder="username"
           />
           <Input
+            type="email"
             id="email"
             name="email"
             value={email}
@@ -135,6 +136,7 @@ const SignUp = () => {
             placeholder="email"
           />
           <Input
+            type="password"
             id="password"
             name="password"
             value={password}
@@ -142,6 +144,7 @@ const SignUp = () => {
             placeholder="password"
           />
           <Input
+            type="password"
             id="confirmPassword"
             name="confirmPassword"
             value={confirmPassword}
