@@ -4,15 +4,4 @@ import svgr from "vite-plugin-svgr";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
-  build: {
-    manifest: true,
-    rollupOptions: {
-      input: "./src/main.jsx",
-    },
-  },
-  server: {
-    proxy: {
-      "/api": "http://localhost:5000/", // the address that u serve in the backend
-    },
-  },
 });
