@@ -4,8 +4,8 @@
   "description": "coffee e-commerce store app",
   "main": "index.js",
   "scripts": {
-    "start": "node api/index.js",
-    "dev": "nodemon api/index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "Mox",
@@ -25,7 +25,7 @@
     "stripe": "^11.18.0"
   },
   "engines": {
-    "node": "18.x",
+    "node": "18.10.0",
     "npm": "9.6.4"
   }
 }
