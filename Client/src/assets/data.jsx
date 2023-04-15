@@ -1,5 +1,5 @@
-import Video1 from "./Videos/coffeevid01.mp4";
-import Video2 from "./Videos/coffeevid02.mp4";
+// import Video1 from "./Videos/coffeevid01.mp4";
+// import Video2 from "./Videos/coffeevid02.mp4";
 
 import { ReactComponent as Africa } from "./Countries/africaHighspec.svg";
 import { ReactComponent as Asia } from "./Countries/asiaHighspec.svg";
@@ -32,16 +32,16 @@ import Vietnam01 from "./CoffeeImgs/Vietnam01.png";
 import Vietnam02 from "./CoffeeImgs/Vietnam02.png";
 import Vietnam03 from "./CoffeeImgs/Vietnam03.png";
 
-export const sliderContent = [
-  {
-    id: 1,
-    video: Video1,
-  },
-  {
-    id: 2,
-    video: Video2,
-  },
-];
+// export const sliderContent = [
+//   {
+//     id: 1,
+//     video: Video1,
+//   },
+//   {
+//     id: 2,
+//     video: Video2,
+//   },
+// ];
 
 export const regions = [
   {
