@@ -1,8 +1,4 @@
 {
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
-  },
   "name": "api",
   "version": "1.0.0",
   "description": "coffee e-commerce store app",
