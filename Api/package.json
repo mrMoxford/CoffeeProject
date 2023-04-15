@@ -1,12 +1,12 @@
 {
-  "name": "api",
-  "version": "1.0.0",
-  "description": "coffee e-commerce store app",
-  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
+  "name": "api",
+  "version": "1.0.0",
+  "description": "coffee e-commerce store app",
+  "main": "index.js",
   "keywords": [],
   "author": "Mox",
   "license": "ISC",
