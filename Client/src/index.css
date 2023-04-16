@@ -18,7 +18,7 @@
   width: 64px;
   height: 64px;
   border: 8px solid;
-  border-color: #000 transparent #555 transparent;
+  border-color: hsla(360, 65%, 20%, 1) transparent hsla(104, 28%, 15%, 1);
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }

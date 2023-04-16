@@ -9,11 +9,11 @@ import Badge from "@mui/material/Badge";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../Redux/auth/authSlice";
 
-const Container = styled.nav`
+const Container = styled.div`
   width: 100%;
   padding: 0.5rem 4rem;
   position: fixed;
-  z-index: 99;
+  z-index: 999;
   background: hsla(360, 100%, 100%, .7));
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6.9px);
@@ -24,19 +24,18 @@ const Container = styled.nav`
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   color: black;
 `;
 const LeftCol = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 `;
 const Logo = styled(Link)`
   font-size: 2rem;
   font-weight: 200;
-  position: absolue;
   text-transform: uppercase;
   text-decoration: none;
   color: black;
@@ -95,8 +94,8 @@ const Logout = styled.button`
 `;
 const NavOpen = styled.div`
   position: absolute;
-  top: 0.5rem;
-  right: 4rem;
+  top: 1rem;
+  right: 1rem;
   display: none;
   justify-content: flex-end;
   align-items: center;
@@ -104,26 +103,26 @@ const NavOpen = styled.div`
   ${smallDevice({ right: "1rem" })}
 `;
 const NavMenuSmall = styled.div`
-  position: fixed;
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  inset: 0;
-  height: 100vh;
-  background: hsla(104, 28%, 15%, 1);
-  transition: max-height 500ms ease-in-out;
+  background-color: hsla(104, 28%, 15%, 1);
 `;
 const NavClose = styled.div`
   position: absolute;
-  top: 0.7rem;
-  right: 4rem;
+  top: 1rem;
+  right: 1rem;
   ${smallDevice({ right: "1rem" })}
 `;
 const NavLogoContainer = styled.div`
   position: absolute;
-  top: 0.25rem;
-  left: 4rem;
+  top: 1rem;
+  left: 1rem;
   ${smallDevice({ left: "1rem" })}
 `;
 const NavListSmall = styled.ul`
@@ -184,12 +183,20 @@ const NavBar = () => {
             <CgCloseO color="white" size={30} />
           </NavClose>
           <NavLogoContainer>
-            <LogoSmall to="/">ODESSY_JAVA</LogoSmall>
+            <LogoSmall onClick={() => setMenuToggle(false)} to="/">
+              ODESSY_JAVA
+            </LogoSmall>
           </NavLogoContainer>
           <NavListSmall>
-            <NavMini to="/">Home</NavMini>
-            <NavMini to="/regions">Explore</NavMini>
-            <NavMini to="/store">Store</NavMini>
+            <NavMini onClick={() => setMenuToggle(false)} to="/">
+              Home
+            </NavMini>
+            <NavMini onClick={() => setMenuToggle(false)} to="/regions">
+              Explore
+            </NavMini>
+            <NavMini onClick={() => setMenuToggle(false)} to="/store">
+              Store
+            </NavMini>
 
             <NavMini to="/cart">
               <Badge badgeContent={quantity} color="warning">

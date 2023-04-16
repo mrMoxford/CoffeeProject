@@ -13,7 +13,6 @@ import Success from "./pages/Success";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-
 import Error404 from "./pages/Error404";
 
 function App() {

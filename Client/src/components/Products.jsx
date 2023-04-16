@@ -3,6 +3,7 @@ import { BASE_URL } from "../reqMethods";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Product from "./Product";
+import Spinner from "./Spinner";
 import axios from "axios";
 // import { products } from "../assets/data";
 
@@ -13,7 +14,7 @@ const Container = styled.div`
   width: 100%;
   gap: 2rem;
   place-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 `;
 const Cart = styled(Link)`
   text-decoration: none;
@@ -21,7 +22,7 @@ const Cart = styled(Link)`
 `;
 const Products = ({ region }) => {
   const [products, setProducts] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const getProducts = async () => {
       try {
@@ -31,6 +32,7 @@ const Products = ({ region }) => {
             : `${BASE_URL}/products`
         );
         setProducts(res.data);
+        setIsLoading(false);
       } catch (err) {
         console.error(err);
       }
@@ -39,11 +41,15 @@ const Products = ({ region }) => {
   }, [region]);
   return (
     <Container>
-      {products.map(item => (
-        <Cart to={`/store/${item._id}`} key={item._id}>
-          <Product item={item} />
-        </Cart>
-      ))}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        products.map(item => (
+          <Cart to={`/store/${item._id}`} key={item._id}>
+            <Product item={item} />
+          </Cart>
+        ))
+      )}
     </Container>
   );
 };

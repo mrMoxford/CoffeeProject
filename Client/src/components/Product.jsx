@@ -1,8 +1,6 @@
 import React from "react";
-import { HiOutlinePlus } from "react-icons/hi";
-import { BsChatHeart } from "react-icons/bs";
+import { AiOutlinePlus } from "react-icons/ai";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 100%;
@@ -15,12 +13,9 @@ const Container = styled.div`
   position: relative;
   background: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-
-  border-radius: 33px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
-
-  &:hover {
+  @media (hover: hover) {
     transform: scale(1.1);
     transiton: scale 500ms ease-in-out;
   }
@@ -46,14 +41,11 @@ const Size = styled.p`
   font-size: minmax(0.5rem, 2rem);
   padding: 1rem;
 `;
-const Circle = styled.div`
+const ImageContainer = styled.div`
   display: flex;
   flex-1;
   justify-content: center;
   align-items: center;
-  background: white;
-//   border-block: 2px solid hsla(104, 28%, 15%, 1);
-  border-radius: 120px;
   width: 100%;
   aspect-ratio: 1/1.2;
   position: relative;
@@ -75,7 +67,6 @@ const PriceContainer = styled.div`
   align-items: center;
   padding: 0.5rem 1rem;
   background: hsla(360, 65%, 20%, 1);
-  border-radius: 45px;
   margin-top: 1rem;
 `;
 const Price = styled.p`
@@ -85,25 +76,23 @@ const Icon = styled.i`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  border-radius: 50%;
   width: 2rem;
   aspect-ratio: 1;
 `;
 const Product = ({ item }) => {
   return (
     <Container>
-      <Circle>
+      <ImageContainer>
         <SmallCircle>
           <Size>{item.size}</Size>
         </SmallCircle>
         <Image src={item.image} />
-      </Circle>
+      </ImageContainer>
 
       <PriceContainer>
-        <Price>{item.price}</Price>
+        <Price>¥{item.price}</Price>
         <Icon>
-          <HiOutlinePlus color="hsla(104, 28%, 15%, 1)" size={30} />
+          <AiOutlinePlus color="white" size={30} />
         </Icon>
       </PriceContainer>
     </Container>

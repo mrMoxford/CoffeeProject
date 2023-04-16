@@ -5,9 +5,9 @@ import { tabletDevice, smallDevice } from "../Responsive";
 import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
-  padding: 5rem 4rem;
+  padding: 4rem;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   color: black;
   display: flex;
   align-items: center;

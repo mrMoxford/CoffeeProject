@@ -1,7 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
-// import Video2 from "../assets/Videos/coffeevid02.mp4";
+import Video2 from "../assets/Videos/coffeeVid02.mp4";
 import { tabletDevice, smallDevice } from "../Responsive";
 
 const Container = styled.header`
@@ -17,7 +17,7 @@ const Content = styled.div`
   justify-content: flex-start;
   height: 100%;
   width: 100%;
-  z-index: 5;
+  z-index: 1;
   pointer-events: none;
 `;
 const HeaderTitle = styled.h1`
@@ -50,8 +50,8 @@ const Home = () => {
         </HeaderTitle>
       </Content>
       <VideoContainer>
-        <Video onMouseOver={e => e.target.play()} muted>
-          {/* <source src={Video2} type="video/mp4" /> */}
+        <Video onMouseOver={e => e.target.play()} preload="true" muted>
+          <source src={Video2} type="video/mp4" />
         </Video>
       </VideoContainer>
     </Container>

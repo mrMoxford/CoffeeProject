@@ -4,13 +4,16 @@ import { smallDevice } from "../Responsive";
 import React, { useState } from "react";
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   padding: 4rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background: hsla(0, 0%, 85%, 0.5);
+  ${smallDevice({
+    padding: "4rem 1rem",
+  })}
 `;
 const CatContainer = styled.div`
   display: flex;
@@ -20,12 +23,15 @@ const CatContainer = styled.div`
   gap: 2rem;
   width: 100%;
   margin-block: 2rem;
-  ${smallDevice({ alignItems: "flex-start", flexDirection: "column" })}
+  ${smallDevice({
+    alignItems: "flex-start",
+  })}
 `;
 const Cat = styled.p`
-  font-size: 2rem;
+  font-size: clamp(0.5rem, 2rem, 3rem);
   cursor: pointer;
   color: ${props => (props.active === true ? "red" : "black")};
+  ${smallDevice({})}
 `;
 const StorePage = () => {
   const [region, setRegion] = useState(null);
