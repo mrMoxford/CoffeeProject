@@ -17,7 +17,7 @@ import {
 const Container = styled.div`
   min-height: 100vh;
   width: 100%;
-  padding: 2rem 4rem;
+  padding: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -243,7 +243,7 @@ const ShoppingCart = () => {
   };
   const handleCheckout = products => {
     axios
-      .post(`${BASE_URL}/checkout/create-checkout-session`, {
+      .post(`${BASE_URL}/checkout/create-checkout-session/`, {
         products,
         userId: user._id,
       })

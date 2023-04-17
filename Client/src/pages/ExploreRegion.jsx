@@ -13,7 +13,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  ${smallDevice({ padding: "1rem" })}
+  ${smallDevice({ padding: "4rem ,1rem" })}
 `;
 const Title = styled.h1`
   font-size: 3rem;

@@ -11,21 +11,19 @@ import { logout, reset } from "../Redux/auth/authSlice";
 
 const Container = styled.div`
   width: 100%;
-  padding: 0.5rem 4rem;
+  padding: 0.5rem 1rem;
   position: fixed;
   z-index: 999;
-  background: hsla(360, 100%, 100%, .7));
+  background: hsla(104, 28%, 15%, 0.7);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6.9px);
   -webkit-backdrop-filter: blur(6.9px);
   font-size: 1rem;
-  ${smallDevice({ padding: "1rem" })}
 `;
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: black;
 `;
 const LeftCol = styled.div`
   flex: 1;
@@ -38,7 +36,7 @@ const Logo = styled(Link)`
   font-weight: 200;
   text-transform: uppercase;
   text-decoration: none;
-  color: black;
+  color: white;
   margin: 0;
   padding: 0;
   ${smallDevice({ fontSize: "1.5rem" })}
@@ -68,7 +66,7 @@ const NavList = styled.ul`
 const Nav = styled(NavLink)`
   text-decoration: none;
   text-transform: uppercase;
-  color: black;
+  color: white;
   &.active {
     color: red;
   }
@@ -161,7 +159,7 @@ const NavBar = () => {
         <RightCol>
           <Badge badgeContent={quantity} color="warning">
             <Nav to="/cart">
-              <RiShoppingBasket2Line color="black" size={"2rem"} />
+              <RiShoppingBasket2Line color="white" size={"2rem"} />
             </Nav>
           </Badge>
           {user ? (
@@ -175,7 +173,7 @@ const NavBar = () => {
         </RightCol>
       </Wrapper>
       <NavOpen onClick={() => setMenuToggle(true)}>
-        <HiOutlineMenuAlt3 color="black" size={30} />
+        <HiOutlineMenuAlt3 color="white" size={30} />
       </NavOpen>
       {menuToggle && (
         <NavMenuSmall>
@@ -199,7 +197,11 @@ const NavBar = () => {
             </NavMini>
 
             <NavMini to="/cart">
-              <Badge badgeContent={quantity} color="warning">
+              <Badge
+                badgeContent={quantity}
+                onClick={() => setMenuToggle(false)}
+                color="warning"
+              >
                 <RiShoppingBasket2Line color="white" size={"2rem"} />
               </Badge>
             </NavMini>
@@ -210,8 +212,12 @@ const NavBar = () => {
               </Logout>
             ) : (
               <>
-                <NavMini to="/login">Login</NavMini>
-                <NavMini to="/signup">Signup</NavMini>
+                <NavMini to="/login" onClick={() => setMenuToggle(false)}>
+                  Login
+                </NavMini>
+                <NavMini to="/signup" onClick={() => setMenuToggle(false)}>
+                  Signup
+                </NavMini>
               </>
             )}
           </NavListSmall>

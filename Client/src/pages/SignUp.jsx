@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { signup, reset } from "../Redux/auth/authSlice";
 import Spinner from "../components/Spinner";
 const Container = styled.div`
-  padding: 2rem 4rem;
+  padding: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;

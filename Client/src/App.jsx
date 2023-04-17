@@ -66,21 +66,18 @@ const router = createBrowserRouter([
         path: "/success",
         element: <Success />,
       },
+      {
+        path: "/cart",
+        element: <ShoppingCart />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
     ],
-  },
-  {
-    path: "/cart",
-    element: <ShoppingCart />,
-    errorElement: <Error404 />,
-  },
-  {
-    path: "/signup",
-    element: <SignUp />,
-    errorElement: <Error404 />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-    errorElement: <Error404 />,
   },
 ]);

@@ -5,6 +5,7 @@ import { tabletDevice, smallDevice } from "../Responsive";
 import { useLocation } from "react-router-dom";
 import { addToCart, getTotals } from "../Redux/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../components/Spinner";
 
 const Container = styled.div`
   padding: 2rem 6rem;
@@ -91,6 +92,7 @@ const SingleProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   useEffect(() => {
@@ -102,6 +104,7 @@ const SingleProduct = () => {
       try {
         const res = await publicRequest.get("/products/find/" + id);
         setProduct(res.data);
+        setIsLoading(false);
       } catch (err) {
         console.error(err);
       }
@@ -114,33 +117,39 @@ const SingleProduct = () => {
   };
   return (
     <Container>
-      <Wrapper>
-        <ProductInfo>
-          <Name>{product.name}</Name>
-          <Brand>
-            <b>Brand:</b> {product.brand}
-          </Brand>
-          <Region>
-            <b> Region:</b> {product.region}
-          </Region>
-          <Country>
-            <b>Origin:</b> {product.country}
-          </Country>
-          <RoastLevel>
-            <b>Roast Level:</b> {product.roastLevel}
-          </RoastLevel>
-          <FlavourProfile>
-            <b>Flavour Profile:</b> {product.flavourProfile}
-          </FlavourProfile>
-          <Selects>
-            <Price>¥{product.price} </Price>
-            <Button onClick={() => handleClick(product)}>Add to Basket</Button>
-          </Selects>
-        </ProductInfo>
-        <ImageContainer>
-          <Image src={product.image} />
-        </ImageContainer>
-      </Wrapper>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Wrapper>
+          <ProductInfo>
+            <Name>{product.name}</Name>
+            <Brand>
+              <b>Brand:</b> {product.brand}
+            </Brand>
+            <Region>
+              <b> Region:</b> {product.region}
+            </Region>
+            <Country>
+              <b>Origin:</b> {product.country}
+            </Country>
+            <RoastLevel>
+              <b>Roast Level:</b> {product.roastLevel}
+            </RoastLevel>
+            <FlavourProfile>
+              <b>Flavour Profile:</b> {product.flavourProfile}
+            </FlavourProfile>
+            <Selects>
+              <Price>¥{product.price} </Price>
+              <Button onClick={() => handleClick(product)}>
+                Add to Basket
+              </Button>
+            </Selects>
+          </ProductInfo>
+          <ImageContainer>
+            <Image src={product.image} />
+          </ImageContainer>
+        </Wrapper>
+      )}
     </Container>
   );
 };

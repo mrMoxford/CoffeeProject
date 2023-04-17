@@ -1,8 +1,7 @@
 import React from "react";
-
 import styled from "styled-components";
-import Video2 from "../assets/videos/coffeeVid02.mp4";
-import { tabletDevice, smallDevice } from "../Responsive";
+import BG from "../assets/videos/bgVid.mp4";
+import { tabletDevice } from "../Responsive";
 
 const Container = styled.header`
   width: 100%;
@@ -27,7 +26,9 @@ const HeaderTitle = styled.h1`
   width: 100%;
   color: white;
   ${tabletDevice({ fontSize: "clamp(1rem,5vw,3rem);" })};
-  // ${smallDevice({ fontSize: "1.5rem;" })};
+`;
+const Span = styled.span`
+  color: red;
 `;
 const VideoContainer = styled.div`
   display: flex;
@@ -46,12 +47,12 @@ const Home = () => {
     <Container>
       <Content>
         <HeaderTitle>
-          Let us take your tastebuds on a journey of discovery...
+          Let us take your <Span>tastebuds</Span> on a journey of discovery...
         </HeaderTitle>
       </Content>
       <VideoContainer>
         <Video onMouseOver={e => e.target.play()} preload="true" muted>
-          <source src={Video2} type="video/mp4" />
+          <source src={BG} type="video/mp4" />
         </Video>
       </VideoContainer>
     </Container>
