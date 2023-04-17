@@ -17,8 +17,12 @@ const Content = styled.div`
   justify-content: flex-start;
   height: 100%;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
+  inset: 0;
+  ${tabletDevice({
+    background: "hsla(0, 0%, 0%, 0.3)",
+  })};
 `;
 const HeaderTitle = styled.h1`
   font-size: 4rem;
@@ -26,7 +30,9 @@ const HeaderTitle = styled.h1`
   font-family: "Poppins", sans-serif;
   width: 100%;
   color: white;
-  ${tabletDevice({ fontSize: "clamp(1rem,5vw,3rem);" })};
+  ${tabletDevice({
+    fontSize: "3rem",
+  })};
 `;
 const Span = styled.span`
   color: red;
