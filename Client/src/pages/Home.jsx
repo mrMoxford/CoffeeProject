@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import BG from "../assets/videos/bgVid.mp4";
+import poster from "../assets/videos/bg-photo.png";
 import { tabletDevice } from "../Responsive";
 
 const Container = styled.header`
@@ -51,7 +52,12 @@ const Home = () => {
         </HeaderTitle>
       </Content>
       <VideoContainer>
-        <Video onMouseOver={e => e.target.play()} preload="true" muted>
+        <Video
+          poster={poster}
+          onMouseOver={e => e.target.play()}
+          preload="true"
+          muted
+        >
           <source src={BG} type="video/mp4" />
         </Video>
       </VideoContainer>
