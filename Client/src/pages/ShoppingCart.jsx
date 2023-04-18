@@ -265,7 +265,10 @@ const ShoppingCart = () => {
       <Wrapper>
         <Sections>
           <Topsection>
-            <TopButton to="/store"> ← Back to Store </TopButton>
+            <TopButton to="/store" id="back-to-store">
+              {" "}
+              ← Back to Store{" "}
+            </TopButton>
           </Topsection>
 
           <Bottomsection>
@@ -302,11 +305,13 @@ const ShoppingCart = () => {
                         <HiMinus
                           onClick={() => handleDecrement(item)}
                           cursor="pointer"
+                          id="decrecrement"
                         />
                         <ItemQuatity>{item.quantity}</ItemQuatity>
                         <HiPlus
                           onClick={() => handleIncrement(item)}
                           cursor="pointer"
+                          id="increcrement"
                         />
                       </QuantityContainer>
                       <Delete>
@@ -314,6 +319,7 @@ const ShoppingCart = () => {
                           onClick={() => handleRemove(item)}
                           size={40}
                           cursor="pointer"
+                          id="delete-item"
                         />
                       </Delete>
                     </CartItem>
@@ -325,7 +331,9 @@ const ShoppingCart = () => {
               <Empty> Your cart is empty please start shopping </Empty>
             )}
           </Bottomsection>
-          <ClearButton onClick={handleClearCart}>Clear Cart</ClearButton>
+          <ClearButton id="clear-cart" onClick={handleClearCart}>
+            Clear Cart
+          </ClearButton>
         </Sections>
         <Summary>
           <SummurayTitle>Order Summary</SummurayTitle>
@@ -346,7 +354,10 @@ const ShoppingCart = () => {
             <SummurayPrice>{` ¥${summaryTotal.toLocaleString()}`}</SummurayPrice>
           </SummurayItem>
 
-          <CheckoutButton onClick={() => handleCheckout(cart.products)}>
+          <CheckoutButton
+            id="checkout"
+            onClick={() => handleCheckout(cart.products)}
+          >
             Checkout Now
           </CheckoutButton>
         </Summary>

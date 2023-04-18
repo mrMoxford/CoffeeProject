@@ -147,52 +147,82 @@ const NavBar = () => {
       <Wrapper>
         <LeftCol>
           {" "}
-          <Logo to="/">ODESSY_JAVA</Logo>
+          <Logo to="/" className="logo">
+            ODESSY_JAVA
+          </Logo>
         </LeftCol>
         <CenterCol>
           <NavList>
-            <Nav to="/">Home</Nav>
-            <Nav to="/regions">Explore</Nav>
-            <Nav to="/Store">Store</Nav>
+            <Nav to="/" className="home">
+              Home
+            </Nav>
+            <Nav to="/regions" className="explore">
+              Explore
+            </Nav>
+            <Nav to="/Store" className="store">
+              Store
+            </Nav>
           </NavList>
         </CenterCol>
         <RightCol>
           <Badge badgeContent={quantity} color="warning">
-            <Nav to="/cart">
+            <Nav to="/cart" className="cart">
               <RiShoppingBasket2Line color="white" size={"2rem"} />
             </Nav>
           </Badge>
           {user ? (
-            <Logout onClick={handleLogout}>Logout</Logout>
+            <Logout onClick={handleLogout} className="logout">
+              Logout
+            </Logout>
           ) : (
             <>
-              <Nav to="/login">Login</Nav>
-              <Nav to="/signup">Signup</Nav>
+              <Nav to="/login" className="login">
+                Login
+              </Nav>
+              <Nav to="/signup" className="signup">
+                Signup
+              </Nav>
             </>
           )}
         </RightCol>
       </Wrapper>
-      <NavOpen onClick={() => setMenuToggle(true)}>
+      <NavOpen onClick={() => setMenuToggle(true)} className="menu-open">
         <HiOutlineMenuAlt3 color="white" size={30} />
       </NavOpen>
       {menuToggle && (
         <NavMenuSmall>
-          <NavClose onClick={() => setMenuToggle(false)}>
+          <NavClose onClick={() => setMenuToggle(false)} className="menu-close">
             <CgCloseO color="white" size={30} />
           </NavClose>
           <NavLogoContainer>
-            <LogoSmall onClick={() => setMenuToggle(false)} to="/">
+            <LogoSmall
+              onClick={() => setMenuToggle(false)}
+              to="/"
+              className="logo"
+            >
               ODESSY_JAVA
             </LogoSmall>
           </NavLogoContainer>
           <NavListSmall>
-            <NavMini onClick={() => setMenuToggle(false)} to="/">
+            <NavMini
+              onClick={() => setMenuToggle(false)}
+              to="/"
+              className="home"
+            >
               Home
             </NavMini>
-            <NavMini onClick={() => setMenuToggle(false)} to="/regions">
+            <NavMini
+              onClick={() => setMenuToggle(false)}
+              to="/regions"
+              className="explore"
+            >
               Explore
             </NavMini>
-            <NavMini onClick={() => setMenuToggle(false)} to="/store">
+            <NavMini
+              onClick={() => setMenuToggle(false)}
+              to="/store"
+              className="store"
+            >
               Store
             </NavMini>
 
@@ -201,21 +231,34 @@ const NavBar = () => {
                 badgeContent={quantity}
                 onClick={() => setMenuToggle(false)}
                 color="warning"
+                className="cart"
               >
                 <RiShoppingBasket2Line color="white" size={"2rem"} />
               </Badge>
             </NavMini>
 
             {user ? (
-              <Logout type="navLogout" onClick={handleLogout}>
+              <Logout
+                type="navLogout"
+                onClick={handleLogout}
+                className="logout"
+              >
                 Logout
               </Logout>
             ) : (
               <>
-                <NavMini to="/login" onClick={() => setMenuToggle(false)}>
+                <NavMini
+                  to="/login"
+                  onClick={() => setMenuToggle(false)}
+                  className="login"
+                >
                   Login
                 </NavMini>
-                <NavMini to="/signup" onClick={() => setMenuToggle(false)}>
+                <NavMini
+                  to="/signup"
+                  onClick={() => setMenuToggle(false)}
+                  className="signup"
+                >
                   Signup
                 </NavMini>
               </>

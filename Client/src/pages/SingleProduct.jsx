@@ -140,7 +140,10 @@ const SingleProduct = () => {
             </FlavourProfile>
             <Selects>
               <Price>¥{product.price} </Price>
-              <Button onClick={() => handleClick(product)}>
+              <Button
+                className="add-to-cart"
+                onClick={() => handleClick(product)}
+              >
                 Add to Basket
               </Button>
             </Selects>

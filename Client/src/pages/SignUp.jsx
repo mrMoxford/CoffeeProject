@@ -157,8 +157,11 @@ const SignUp = () => {
             information with any third parties, as your privacy is important to
             us.
           </Agreement>
-          <Button>Sign Up</Button>
-          <ALink to="/login"> Already have an account?</ALink>
+          <Button className="signup">Sign Up</Button>
+          <ALink to="/login" className="login">
+            {" "}
+            Already have an account?
+          </ALink>
         </Form>
       </Wrapper>
     </Container>

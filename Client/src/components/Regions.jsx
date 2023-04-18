@@ -38,7 +38,12 @@ const Regions = () => {
       <Title>Pick a region on the map to start your journey.</Title>
       <Wrapper>
         {regions.map(region => (
-          <RegionItem key={region.id} id={region.id} item={region} />
+          <RegionItem
+            key={region.id}
+            id={region.id}
+            item={region}
+            className={region.title}
+          />
         ))}
       </Wrapper>
     </Container>

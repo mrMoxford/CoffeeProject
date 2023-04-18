@@ -121,9 +121,11 @@ const Login = () => {
             onChange={e => setPassword(e.target.value)}
           />
           {isError && <Message>Something went wrong</Message>}
-          <Button>Log In</Button>
-          <ALink>Forgot your password?</ALink>
-          <ALink to="/signup">Don't have an account? </ALink>
+          <Button className="login">Log In</Button>
+          <ALink className="forgotten-password">Forgot your password?</ALink>
+          <ALink to="/signup" className="signup">
+            Don't have an account?{" "}
+          </ALink>
         </Form>
       </Wrapper>
       <Imagesection></Imagesection>
