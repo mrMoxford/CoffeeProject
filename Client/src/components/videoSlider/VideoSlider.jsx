@@ -47,8 +47,23 @@ const VideoSlider = ({ videos }) => {
       <div onClick={goRight} className="Arrow right">
         <FaChevronRight size={50} />
       </div>  */}
+      /* */
     </div>
   );
 };
 
 export default VideoSlider;
+
+// const goLeft = () => {
+//   const isfirstImage = currentIndex === 0;
+//   const newIndex = isfirstImage ? images.length - 1 : currentIndex - 1;
+//   setcurrentIndex(newIndex);
+// };
+// const goRight = () => {
+//   const isLastImage = currentIndex === images.length - 1;
+//   const newIndex = isLastImage ? 0 : currentIndex + 1;
+//   setcurrentIndex(newIndex);
+// };
+// const calculateTransform = () => {
+//   return `translateX(-${currentIndex * 100}%)`;
+// };

@@ -14,7 +14,7 @@ const Container = styled.div`
   width: 100%;
   gap: 2rem;
   place-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 `;
 const Cart = styled(Link)`
   text-decoration: none;

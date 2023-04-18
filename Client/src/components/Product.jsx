@@ -15,7 +15,7 @@ const Container = styled.div`
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  @media (hover: hover) {
+  &:hover {
     transform: scale(1.1);
     transiton: scale 500ms ease-in-out;
   }
