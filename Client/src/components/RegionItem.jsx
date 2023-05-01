@@ -23,7 +23,7 @@ const Image = styled.div`
     height: 100%;
     width: 100%;
 
-    @media (hover: hover) {
+    @media (min-width: 54.6em) {
       &:hover path {
         fill: hsla(104, 28%, 15%, 1);
       }

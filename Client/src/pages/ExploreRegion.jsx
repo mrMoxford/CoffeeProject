@@ -33,8 +33,8 @@ const Image = styled.div`
   align-items: center;
   background: hsla(104, 28%, 15%, 1);
   & svg {
-    max-height: 100%;
-    max-width: 100%;
+    height: 100%;
+    width: 100%;
   }
 `;
 

@@ -1,7 +1,7 @@
 // import Video1 from "./Videos/coffeevid01.mp4";
 // import Video2 from "./Videos/coffeevid02.mp4";
 
-import { ReactComponent as Africa } from "./Countries/africaHighspec.svg";
+import {ReactComponent as Africa}  from "./Countries/africaHighspec.svg";
 import { ReactComponent as Asia } from "./Countries/asiaHighspec.svg";
 import { ReactComponent as SouthAmerica } from "./Countries/southAmericaHighspec.svg";
 import Brazil01 from "./CoffeeImgs/Brazil01.png";
@@ -46,7 +46,7 @@ import Vietnam03 from "./CoffeeImgs/Vietnam03.png";
 export const regions = [
   {
     id: 1,
-    image: <Africa />,
+    image: <Africa/>,
     title: "Africa",
     info: "Coffee grown worldwide can trace its heritage back centuries to the ancient coffee forests on the Ethiopian plateau. There, legend says the goat herder Kaldi first discovered the potential of these beloved beans.The story goes that that Kaldi discovered coffee after he noticed that after eating the berries from a certain tree, his goats became so energetic that they did not want to sleep at night. Kaldi reported his findings to the abbot of the local monastery, who made a drink with the berries and found that it kept him alert through the long hours of evening prayer. The abbot shared his discovery with the other monks at the monastery, and knowledge of the energizing berries began to spread.",
   },
