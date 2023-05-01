@@ -119,7 +119,7 @@ const NavClose = styled.div`
 `;
 const NavLogoContainer = styled.div`
   position: absolute;
-  top: 1rem;
+  top: .5rem;
   left: 1rem;
   ${smallDevice({ left: "1rem" })}
 `;
