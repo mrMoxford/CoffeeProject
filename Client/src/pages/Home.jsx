@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BG from "../assets/videos/bgGif.gif";
-import poster from "../assets/videos/bg-photo.png";
+import BG from "../assets/videos/BgGif.gif";
 import { tabletDevice } from "../Responsive";
 
 const Container = styled.header`
