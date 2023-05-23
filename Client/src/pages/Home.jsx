@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BG from "../assets/videos/bgVid.mp4";
+import BG from "../assets/videos/bgGif.gif";
 import poster from "../assets/videos/bg-photo.png";
 import { tabletDevice } from "../Responsive";
 
@@ -44,7 +44,7 @@ const VideoContainer = styled.div`
   width: 100%;
   height: 100vh;
 `;
-const Video = styled.video`
+const Img = styled.img`
   width: 100vw;
   height: 100%;
   object-fit: cover;
@@ -58,14 +58,15 @@ const Home = () => {
         </HeaderTitle>
       </Content>
       <VideoContainer>
-        <Video
+        {/* <Video
           poster={poster}
           onMouseOver={e => e.target.play()}
           preload="true"
           muted
         >
           <source src={BG} type="video/mp4" />
-        </Video>
+        </Video> */}
+        <Img src={BG} alt="waterfall in the jungle" />
       </VideoContainer>
     </Container>
   );
