@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BG from "../assets/videos/BgGif.gif";
+import BG from "../assets/videos/bgVid-2.gif";
 import { tabletDevice } from "../Responsive";
 
 const Container = styled.header`
