@@ -21,3 +21,10 @@ export const mediumDevice = props => {
     }
   `;
 };
+export const largeDevice = props => {
+  return css`
+    @media (min-width: 54.7em) {
+      ${props}
+    }
+  `;
+};

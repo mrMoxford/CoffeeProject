@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import styled from "styled-components";
+import { largeDevice} from "../Responsive";
 
 const Container = styled.div`
   height: 100%;
@@ -16,9 +17,10 @@ const Container = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
   &:hover {
-    transform: scale(1.1);
-    transiton: scale 500ms ease-in-out;
+    ${largeDevice({transform: "scale(1.1)", transition: " scale 500ms ease-in"})}
+    
   }
+  
 `;
 
 const SmallCircle = styled.div`
